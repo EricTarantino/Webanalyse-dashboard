@@ -1,1 +1,0 @@
-angular.module('materialHilfe',['ngMaterial', 'ngMessages']);
