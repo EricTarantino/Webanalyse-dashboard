@@ -1,0 +1,1 @@
+angular.module('sidebar',['ngMaterial', 'ngMessages'])//, 'material.svgAssetsCache'

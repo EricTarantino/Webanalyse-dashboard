@@ -1,0 +1,120 @@
+<!--Graph, dieser graph bezieht seine Daten aus dem Call an die Datenbank-->
+
+
+
+<script type="text/javascript">
+function setUpChart(containerID) {
+    // Set up the chart
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'containerID',
+            type: 'column',
+            options3d: {
+                enabled: true,
+                alpha: 15,
+                beta: 15,
+                depth: 50,
+                viewDistance: 25
+            }
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: 'Views in 2016'
+        },
+        plotOptions: {
+            column: {
+                depth: 25
+            }
+        },
+        xAxis: {
+            min: 1,
+         },
+        series: [{
+            data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        }]
+    });
+
+    function showValues() {
+        $('#alpha-value').html(chart.options.chart.options3d.alpha);
+        $('#beta-value').html(chart.options.chart.options3d.beta);
+        $('#depth-value').html(chart.options.chart.options3d.depth);
+    }
+
+    // Activate the sliders
+    $('#sliders input').on('input change', function () {
+        chart.options.chart.options3d[this.id] = this.value;
+        showValues();
+        chart.redraw(false);
+    });
+    
+    showValues();    
+    
+	$("#updateChart").click(function() {   	 		
+   		//var chart=$("#containerCh").highcharts();
+		//var data = [10, 10, 10, 10, 10, 10, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4];
+		//chart.series[0].setData(data,true); 
+		updateChart();
+	});
+	
+	function getScope(ctrlName) {
+    	var sel = 'div[ng-controller="' + ctrlName + '"]';
+    	return angular.element(sel).scope();
+	}
+	
+	function updateChart2() {   	 		
+   		var chart=$("#containerCh").highcharts();
+   		
+   		//fetch the data from the angular controller scope
+   		//$scope = getScope('GraphCtrl');
+   		
+   		//var data = $scope.data;
+   		
+		var data = [10, 10, 10, 10, 10, 10, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4];
+		chart.series[0].setData(data,true); 
+	}	
+};
+</script>
+
+<div id="containerChAnalyticsGraph2" style="height:400px"></div>
+
+<div ng-controller="analyticsGraphCtrl" class="md-padding" ng-cloak>
+
+<!-- on update send data to graph controller with graph name and update the coresponding graph -->
+  <div>
+    <h1 class="md-title">Metric</h1>
+    <div layout="row">
+      <md-input-container>
+        <label>Metric</label>
+        <md-select ng-model="selectedItem" md-selected-text="getSelectedText()">
+          <md-optgroup label="items">
+            <md-option ng-value="item" ng-repeat="item in items">Item {{item}}</md-option>
+          </md-optgroup>
+        </md-select>
+      </md-input-container>
+    </div>
+  </div>
+  
+  <div>
+    <h1 class="md-title">Dimension</h1>
+    <div layout="row">
+      <md-input-container>
+        <label>Dimension</label>
+        <md-select ng-model="selectedItem" md-selected-text="getSelectedText()">
+          <md-optgroup label="items">
+            <md-option ng-value="item" ng-repeat="item in items">Item {{item}}</md-option>
+          </md-optgroup>
+        </md-select>
+      </md-input-container>
+    </div>
+  </div>
+  
+</div>
+
+
+<!--
+http://ahumbleopinion.com/highcharts-tips-accessing-chart-object-from-container-id/
+http://jsfiddle.net/NxEnH/8/		
+-->
+

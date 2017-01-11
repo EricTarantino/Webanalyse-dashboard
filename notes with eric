@@ -1,0 +1,18 @@
+notes with eric
+
+- Mongodb is on compose.io
+- Data sources
+	- Webtrends
+	- Search console
+
+
+To Do before End of December 2016
+- Analytics dashboard
+	- Adding and deleting graphs on the server side to store - EVL
+	- New graph / new dashboard input validation - BPA
+- Management dash - EVL
+	- The date should take effect on the three graphs on mgmt dash
+	- Auto scroll to newly added graphs (on the top of the page) (minor)
+- Data source (Profile in the new graph adder)
+	- Add the other possible options from webtrends - EVL
+	- Another data souce - 'search console' should be integrated - BPA

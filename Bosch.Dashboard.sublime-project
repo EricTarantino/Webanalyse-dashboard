@@ -1,0 +1,21 @@
+{
+	    "folders":
+    [
+        {
+            "path": ".",
+            "folder_exclude_patterns": [".Rproj.user", "node_modules", ".Rhistory"],
+            "follow_symlinks": true
+        }
+    ],
+    "settings":
+    {
+        "tab_size": 4,
+        "indent_with_tabs": true
+    },
+    "build_systems":
+    [
+        {
+
+        }
+    ]
+}

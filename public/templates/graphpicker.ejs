@@ -1,0 +1,24 @@
+
+<div ng-controller="GraphpickerCtrl" ng-cloak style="padding-top:30px" >
+
+  
+    <p class="md-body-2 text-center">Ihre Graphenauswahl</p>
+    
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12"> 
+      <md-input-container>
+        <label>Graphen</label>
+        <md-select ng-model="selectedItem" md-selected-text="getSelectedText()">
+          <md-optgroup label="Graphen">
+            <md-option ng-value="item" ng-repeat="item in items">{{item}}</md-option>
+          </md-optgroup>
+        </md-select>
+      </md-input-container>    
+    </div>
+
+</div>
+
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be foundin the LICENSE file at http://material.angularjs.org/HEAD/license.
+-->

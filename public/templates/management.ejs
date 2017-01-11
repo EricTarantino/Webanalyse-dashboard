@@ -1,0 +1,138 @@
+<div ng-controller="ManagementCtrl as vm" ng-cloak>
+	<div id="managementCard0" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+		<md-content layout-padding>  
+      		<md-card>
+       			<img ng-click="vm.toggleUmsatz()" ng-show="vm.imageUmsatzShow" ng-src="{{vm.imagePath}}" class="md-card-image" alt="Umsatz">
+       			
+       			<!-- blend in the number for the revenue -->
+       			<div ng-click="vm.toggleUmsatz()" ng-hide="vm.imageUmsatzShow" class="text-center" style="height:100px; padding-top:50px; padding-bottom:80px">
+       				<md-card-content>
+        	 			<p class="md-headline">{{vm.umsatz}}</p>
+        			</md-card-content>       			
+       			</div>       			
+       			
+       			<!-- title revenue and show percentage-->
+      			<md-card-title style="padding-left:15px; padding-top:15px">
+       				 <md-card-title-text>
+        		 		<span class="md-headline">Umsatz</span><span class="md-headline" style="float:right; padding-right:15px" ng-hide="vm.imageUmsatzShow">{{vm.percentUmsatz}}</span>
+          			</md-card-title-text>
+        		</md-card-title>
+        		
+        		<!-- have the percentages here for the revenue 
+        		<md-card-content>
+          			<p md-body-2 ng-hide="vm.imageUmsatzShow">{{vm.percentUmsatz}}</p>
+        		</md-card-content>
+        		-->
+				<md-card-actions style="padding:0px" layout="row" layout-sm="row" layout-align="end center" layout-wrap>
+						  		
+					<div layout="row" layout-align="start center" flex>								
+						<md-icon md-svg-src="../icon/ic_equalizer_black_24px.svg"></md-icon><!-- show graph -->
+						<span flex></span>
+					</div>							
+						<md-icon ng-click="vm.zoomout('managementCard0')" md-svg-src="../icon/ic_remove_from_queue_black_24px.svg"></md-icon><!-- minimize -->
+						<md-icon ng-click="vm.zoomin('managementCard0')" md-svg-src="../icon/ic_add_to_queue_black_24px.svg"></md-icon><!-- maximize -->
+				</md-card-actions>
+					
+			
+        		<!-- toggle button umsatz -->	<!--
+        		<md-card-actions layout="row" layout-align="end center"style="padding-top:20px">
+        			<md-card-icon-actions>
+          				<md-button ng-click="vm.minimize()">Minimize</md-button> 
+          				<md-button ng-click="vm.toggleUmsatz()">{{vm.toggleButtonUmsatz}}</md-button>            			
+          				<!-- blend in the graph -->	<!--
+          				<a ui-sref="{{vm.graphTemplate}}" style="float:right; padding-top:10px; padding-right:15px">	
+          					<md-icon md-svg-icon={{vm.graphIconPath}} alt="Leads Graph Icon"></md-icon>          				
+          				</a>   
+          			</md-card-icon-actions>
+        		</md-card-actions>
+        		-->
+        		
+      		</md-card>
+      	</md-content>
+	</div>
+	
+	<div id="managementCard1" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+		<md-content layout-padding>  
+      		<md-card>
+       			<img ng-click="vm.toggleVisits()" ng-show="vm.imageVisitsShow" ng-src="{{vm.imagePath}}" class="md-card-image" alt="Visits">
+       			
+       			<!-- blend in the number for the visits -->
+       			<div ng-click="vm.toggleVisits()" ng-hide="vm.imageVisitsShow" class="text-center" style="height:100px; padding-top:50px; padding-bottom:80px">
+       			 	<md-card-content>
+        				<p class="md-headline">{{vm.visits}}</p>
+          			</md-card-content>
+       			</div>
+       			
+       			<!-- title visits and show percentage-->
+      			<md-card-title style="padding-left:15px; padding-top:15px">
+       				 <md-card-title-text>
+        		 		<span class="md-headline">Visits</span><span class="md-headline" style="float:right; padding-right:15px" ng-hide="vm.imageVisitsShow">{{vm.percentVisits}}</span>
+          			</md-card-title-text>
+        		</md-card-title>
+
+        		
+        		<!-- toggle button visits -->
+				<md-card-actions style="padding:0px" layout="row" layout-sm="row" layout-align="end center" layout-wrap>
+						  		
+					<div layout="row" layout-align="start center" flex>								
+						<md-icon md-svg-src="../icon/ic_equalizer_black_24px.svg"></md-icon><!-- show graph -->
+						<span flex></span>
+					</div>							
+						<md-icon ng-click="vm.zoomout('managementCard1')" md-svg-src="../icon/ic_remove_from_queue_black_24px.svg"></md-icon><!-- minimize -->
+						<md-icon ng-click="vm.zoomin('managementCard1')" md-svg-src="../icon/ic_add_to_queue_black_24px.svg"></md-icon><!-- maximize -->
+				</md-card-actions>
+				
+      		</md-card>
+   		</md-content>
+	</div>
+	
+	<div id="managementCard2" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+		<md-content layout-padding>  
+      		<md-card>
+       			<img ng-click="vm.toggleLeads()" ng-show="vm.imageLeadsShow" ng-src="{{vm.imagePath}}" class="md-card-image" alt="Leads">
+       			
+       			<!-- blend in the number for the leads -->
+       			<div ng-click="vm.toggleLeads()" ng-hide="vm.imageLeadsShow" class="text-center" style="height:100px; padding-top:50px; padding-bottom:80px">
+       				<md-card-content>
+        		 			<p class="md-headline">{{vm.leads}}</p>
+        			</md-card-content>       			
+       			</div>
+       			
+       			<!-- title leads and show percentage-->
+      			<md-card-title style="padding-left:15px; padding-top:15px">
+       				 <md-card-title-text>
+        		 		<span class="md-headline">Leads</span><span class="md-headline" style="float:right; padding-right:15px" ng-hide="vm.imageLeadsShow">{{vm.percentLeads}}</span>
+          			</md-card-title-text>
+        		</md-card-title>
+
+        		
+        		<!-- toggle button leads -->
+				<md-card-actions style="padding:0px" layout="row" layout-sm="row" layout-align="end center" layout-wrap>
+						  		
+					<div layout="row" layout-align="start center" flex>								
+						<md-icon md-svg-src="../icon/ic_equalizer_black_24px.svg"></md-icon><!-- show graph -->
+						<span flex></span>
+					</div>							
+						<md-icon ng-click="vm.zoomout('managementCard2')" md-svg-src="../icon/ic_remove_from_queue_black_24px.svg"></md-icon><!-- minimize -->
+						<md-icon ng-click="vm.zoomin('managementCard2')" md-svg-src="../icon/ic_add_to_queue_black_24px.svg"></md-icon><!-- maximize -->
+				</md-card-actions>
+        		
+      		</md-card>
+   		</md-content>
+	</div>
+	<!--
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div ui-view="management-graph"></div>
+		</div>
+	</div>
+	-->
+	
+</div>
+
+
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be foundin the LICENSE file at http://material.angularjs.org/HEAD/license.
+-->

@@ -1,0 +1,91 @@
+<div layout = "row">
+	<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12" >
+		<div ng-controller="analyticsCtrl">
+			<!--div  ng-controller="analyticsGraph1Ctrl" -->
+			<div ng-repeat="x in mygraphs track by $index">	
+				<!--<div class="slide-animate" ng-include="./graphs/3dGraph.ejs"></div>-->
+				<!--Die Id lautet:  {{x.dashboard}}_{{x.name}}. Buttons zum schließen, vergrößern, verkleinern, zoomen-->
+				<!--<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">-->
+				<md-card >
+					<md-card-actions style="padding:0px" layout="row" layout-sm="column" layout-align="end center" layout-wrap>							  	
+						<div ng-click="setDB(x)" layout="row" layout-align="start center" flex>
+							{{x.name}}
+						<span flex></span>
+						</div>								
+						<md-icon ng-click="deleteGraph(x.dashboard, x.name)" md-svg-src="../icon/ic_highlight_off_black_24px.svg"></md-icon>
+						<md-icon ng-click="zoomout(x.dashboard, x.name)" md-svg-src="../icon/ic_remove_from_queue_black_24px.svg"></md-icon>
+						<md-icon ng-click="zoomin(x.dashboard, x.name)" md-svg-src="../icon/ic_add_to_queue_black_24px.svg"></md-icon>
+						</md-card-actions>	
+					<div style="height: 400px" id="{{x.dashboard}}_{{x.name}}"></div>
+				</md-card>									
+				<!--<div>-->
+			</div>		
+		</div> 	
+	</md-content>
+</div>
+
+
+<div layout = "row">
+	<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12" >
+		<div class="simpleDemo" ng-controller="SimpleDemoController" >
+		
+		<!--Graph, dieser graph bezieht seine Daten aus dem Call an die Datenbank-->
+			<md-card>
+		    <ul dnd-list="list">
+		        <li ng-repeat="item in models.lists.A"
+		            dnd-draggable="item"
+		            dnd-moved="models.lists.A.splice($index, 0)"
+		            dnd-effect-allowed="move"
+		            dnd-selected="models.selected = item"
+		            ng-class="{'selected': models.selected === item}">
+		            {{item.label}}
+		        </li>
+		    </ul>
+		    <ul dnd-list="list">
+		        <li ng-repeat="item in models.lists.B"
+		            dnd-draggable="item"
+		            dnd-moved="models.lists.B.splice($index, 0)"
+		            dnd-effect-allowed="move"
+		            dnd-selected="models.selected = item"
+		            ng-class="{'selected': models.selected === item}">
+		            {{item.label}}
+		        </li>
+		    </ul>
+		    </md-card>
+		</div>
+	</md-content>
+</div>
+
+
+<div layout="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12" style="padding-top:50px">	
+		<md-content>  		
+	    	<md-card>   	
+	   			<md-card-title-text layout>
+	           		<span class="md-headline">Visualisierung von Daten</span>
+	        	</md-card-title-text>
+	   			<img ng-src="../img/charts/Charts00.jpg" class="md-card-image" alt="Charts00">
+	   			<img ng-src="../img/charts/Charts01.jpg" class="md-card-image" alt="Charts01">
+	   			<img ng-src="../img/charts/Charts02.jpg" class="md-card-image" alt="Charts02">
+	   			<img ng-src="../img/charts/Charts03.jpg" class="md-card-image" alt="Charts03">
+	   			<img ng-src="../img/charts/Charts04.jpg" class="md-card-image" alt="Charts04">
+	   			<img ng-src="../img/charts/Charts05.jpg" class="md-card-image" alt="Charts05">
+	   			<img ng-src="../img/charts/Charts06.jpg" class="md-card-image" alt="Charts06">
+	   			<img ng-src="../img/charts/Charts07.jpg" class="md-card-image" alt="Charts07">
+	   			<img ng-src="../img/charts/Charts08.jpg" class="md-card-image" alt="Charts08">	
+	    		<img ng-src="../img/charts/Charts09.jpg" class="md-card-image" alt="Charts09">
+	   			<img ng-src="../img/charts/Charts10.jpg" class="md-card-image" alt="Charts10">
+	   			<img ng-src="../img/charts/Charts11.jpg" class="md-card-image" alt="Charts11">
+	   			<img ng-src="../img/charts/Charts12.jpg" class="md-card-image" alt="Charts12">
+	 			<img ng-src="../img/charts/Charts13.jpg" class="md-card-image" alt="Charts13">
+	   			<img ng-src="../img/charts/Charts14.jpg" class="md-card-image" alt="Charts14">
+	   			<img ng-src="../img/charts/Charts15.jpg" class="md-card-image" alt="Charts15">
+	   			<img ng-src="../img/charts/Charts16.jpg" class="md-card-image" alt="Charts16">   	    	
+	   		</md-card>	
+	   	</md-content>	
+	</div>
+</div>
+
+
+
+
