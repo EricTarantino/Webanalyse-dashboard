@@ -1,0 +1,35 @@
+<div ng-controller="RegisterCtrl as user" layout="column" ng-cloak="" class="inputdemoErrors" >
+<!--ng-controller="materialHilfeController"--> 
+
+  <md-content layout-padding="" style="background-color:white">
+	<form name="loginForm" ng-submit="user.loginSubmit()">
+
+	<div layout="row">
+	  	<!-- TODO: hier ist es verkehrt herum: name ist in description variable und passwort ist in der namen variable -->
+      	<md-input-container class="md-block" flex="50">
+          <label>Email</label>
+          <input md-maxlength="30" required="" md-no-asterisk="" name="clientEmail" ng-model="user.email ">
+          <div ng-messages="loginForm.clientEmail.$error">
+            <div ng-message="required">Ihre Benutzer Emailadresse wird benötigt</div>
+            <div ng-message="md-maxlength">Die Email darf höchstens 30 Zeichen lang sein.</div>
+          </div>
+      	</md-input-container>
+      
+        <md-input-container class="md-block" flex="30">
+          <label>Passwort</label>
+          <input required="" name="clientPassword" ng-model="user.password" type="password">
+          <div ng-messages="loginForm.clientPassword.$error">
+            <div ng-message="required">Ihr Passwort wird benötigt</div>
+          </div>
+        </md-input-container>                
+	</div>
+	
+	<div style="padding-top:60px">
+		<md-button type="submit">Anmelden</md-button>
+	</div>
+	
+    </form>
+    
+  </md-content>
+  
+</div>
