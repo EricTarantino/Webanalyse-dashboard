@@ -42,23 +42,27 @@ module.exports = app;
 	/////////////////////////////////////////////////////////////////////////////
 	//
 	//	Prototype: 
+	//  Mittwoch
+	//  TODO Jira Integration
 	//	TODO Loader
 	//	TODO Search Console Tabelle anzeigen der Daten/ Key numbers (in der neuen Graphenauswahl)
 	//		 Tabelle bei der Graphenauswahl integrieren -> Auswahl liefert alle key metrics
-	//		 
-	//  Samstag:
 	//	TODO Manuels Frontend
+	//  
+	//  Donnerstag
 	//  TODO Drag n Drop
 	// 	TODO Größe der Graphen stretchen
 	//  TODO Löschen der Graphen in der Database
 	//	TODO Login Load Dashboard
 	//  TODO Load graphs at beginning
 	//  TODO Disable scrolling on dialog opening
+	//
+	//  Freitag
 	//  TODO Code cleaning
 	//  TODO Minimum Data is one day
-	//
-	//	Wochenende:
-	//	TODO Promises, Oboe.js streaming (JSON.stream()), Geschwindigkeit
+	//	TODO Promises
+	//  TODO Oboe.js streaming (JSON.stream()), Geschwindigkeit)
+	//	TODO Dynamisches Binden und erstellen von Variablen/ Divs etc.
 	//
     ///////////////////////////////////////////////////////////////////////////////
     //

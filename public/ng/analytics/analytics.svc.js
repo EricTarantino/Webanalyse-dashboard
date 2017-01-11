@@ -23,7 +23,7 @@ angular.module('analytics')
        
   //add user to get a clearly specified graph
   svc.getGraphplot = function (useremail, dashboard, name, scope) {
-	  
+	  	  
   	  var req = {
  	  	method: 'GET',
  		url: 'https://prototype-84629.mybluemix.net/api/graphdata',
@@ -31,7 +31,6 @@ angular.module('analytics')
  		//cache: true
   	  }
 
-	  
       //return the plot data
       $http( req ).then(function successCallback(res) {
       	
@@ -42,12 +41,22 @@ angular.module('analytics')
 
      		//emit data upwards, get the chartID number according to angular module, as scope variable
      		//the graph is emitted, assigned and saved locally by the information it holds (db, name)
+     		//show the graph and unshow the loader
        		scope.$emit('updateAnalyticsChart', [graph]);
+       		alert(""+dashboard+name+"_card")
+       		var graphCardToShow = document.getElementById(""+dashboard+name+"_card");
+       		var loaderToDisplayNone = document.getElementById(""+dashboard+"_"+name+"_loader");
+       		graphCardToShow.style.display = 'block';
+       		loaderToDisplayNone.style.display = 'none';       		
     		    		
   	  }, function errorCallback(data) {
    		 // called asynchronously if an error occurs
-    	 // or server returns response with an error status.
+    	 // or server returns response with an error status
+    	 // unshow the loader
     	 alert("an error in get graph plot data occured");
+    	 alert(""+dashboard+"_"+name+"_card")
+       	 var loaderToDisplayNone = document.getElementById(""+dashboard+"_"+name+"_loader");
+       	 loaderToDisplayNone.style.display = 'none';   
     	 
   	  });           
   }
