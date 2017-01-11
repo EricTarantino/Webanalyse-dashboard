@@ -125,11 +125,11 @@ exports.delete =  function (req, res) {
 
 //save the graph to the database, no plot data yet, will be added on get data response time
 exports.insertNewGraphConfig =  function (req, res, next) {
-	console.log("in new graph config")
+	console.log("in new graph config");
 	var graph = new GraphSchema({useremail: req.body.useremail, dashboard: req.body.dashboard, name: req.body.name, 
 		kategorie: req.body.kategorie, graph: req.body.graph, method: req.body.method, 
 		profile: req.body.profile, startDate: req.body.startDate, endDate: req.body.endDate});
-  	console.log("you saved the graph "+graph)
+  	console.log("you saved the graph "+graph);
 	graph.save();
 	
 	return res.sendStatus(207);

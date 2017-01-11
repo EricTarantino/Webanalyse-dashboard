@@ -42,14 +42,13 @@ module.exports = app;
 	/////////////////////////////////////////////////////////////////////////////
 	//
 	//	Prototype: 
-	//  Mittwoch
-	//  TODO Jira Integration
-	//	TODO Loader
+	//  Mittwoch Graphen anzeigen (Fehlersuche)
 	//	TODO Search Console Tabelle anzeigen der Daten/ Key numbers (in der neuen Graphenauswahl)
 	//		 Tabelle bei der Graphenauswahl integrieren -> Auswahl liefert alle key metrics
 	//	TODO Manuels Frontend
 	//  
 	//  Donnerstag
+	//  TODO Jira Integration
 	//  TODO Drag n Drop
 	// 	TODO Größe der Graphen stretchen
 	//  TODO Löschen der Graphen in der Database
@@ -58,6 +57,7 @@ module.exports = app;
 	//  TODO Disable scrolling on dialog opening
 	//
 	//  Freitag
+	//  TODO Fehlersuche
 	//  TODO Code cleaning
 	//  TODO Minimum Data is one day
 	//	TODO Promises

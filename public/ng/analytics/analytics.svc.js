@@ -26,7 +26,7 @@ angular.module('analytics')
 	  	  
   	  var req = {
  	  	method: 'GET',
- 		url: 'https://prototype-84629.mybluemix.net/api/graphdata',
+ 		url: 'https://dashboard-proto.mybluemix.net/api/graphdata',
  		headers: {'useremail':useremail, 'dashboard':dashboard, 'name': name },
  		//cache: true
   	  }
@@ -43,18 +43,20 @@ angular.module('analytics')
      		//the graph is emitted, assigned and saved locally by the information it holds (db, name)
      		//show the graph and unshow the loader
        		scope.$emit('updateAnalyticsChart', [graph]);
-       		alert(""+dashboard+name+"_card")
-       		var graphCardToShow = document.getElementById(""+dashboard+name+"_card");
+       		//alert(""+dashboard+"_"+name+"_card")
+       		var graphCardIconsToShow = document.getElementById(""+dashboard+"_"+name+"_card_actions");
        		var loaderToDisplayNone = document.getElementById(""+dashboard+"_"+name+"_loader");
-       		graphCardToShow.style.display = 'block';
-       		loaderToDisplayNone.style.display = 'none';       		
+       		var cardToDisplayNone = document.getElementById(""+dashboard+"_"+name);
+       		graphCardIconsToShow.style.display = 'block';
+       		cardToDisplayNone.style.display = 'block';
+       		loaderToDisplayNone.style.display = 'none';    
     		    		
   	  }, function errorCallback(data) {
    		 // called asynchronously if an error occurs
     	 // or server returns response with an error status
     	 // unshow the loader
     	 alert("an error in get graph plot data occured");
-    	 alert(""+dashboard+"_"+name+"_card")
+    	 //alert(""+dashboard+"_"+name+"_card")
        	 var loaderToDisplayNone = document.getElementById(""+dashboard+"_"+name+"_loader");
        	 loaderToDisplayNone.style.display = 'none';   
     	 

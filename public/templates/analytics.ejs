@@ -2,24 +2,24 @@
 	<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12"  style = "background-color: #ffffff">
 		<div ng-controller="analyticsCtrl">
 			<!--div  ng-controller="analyticsGraph1Ctrl" -->
-			<div ng-repeat="x in mygraphs track by $index">
-				<div id="{{x.dashboard}}_{{x.name}}_loader" layout="row" layout-align="center center">
-					<div class="loader"></div>
-				</div>							
+			<div ng-repeat="x in mygraphs track by $index">						
 				<!--<div class="slide-animate" ng-include="./graphs/3dGraph.ejs"></div>-->
 				<!--Die Id lautet:  {{x.dashboard}}_{{x.name}}. Buttons zum schließen, vergrößern, verkleinern, zoomen-->
 				<!--<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">-->		
-				<md-card id="{{x.dashboard}}_{{x.name}}_card" style="display: none">
-					<md-card-actions style="padding:0px" layout="row" layout-sm="column" layout-align="end center" layout-wrap>
+				<md-card>
+					<md-card-actions  id="{{x.dashboard}}_{{x.name}}_card_actions" style="display: none; padding:0px" layout="row" layout-sm="column" layout-align="end center" layout-wrap>
 						<div ng-click="setDB(x)" layout="row" layout-align="start center" flex>
 							{{x.name}}
-						<span flex></span>
+							<span flex></span>
+							<md-icon ng-click="deleteGraph(x.dashboard, x.name)" md-svg-src="../icon/ic_highlight_off_black_24px.svg"></md-icon>
+							<md-icon ng-click="zoomout(x.dashboard, x.name)" md-svg-src="../icon/ic_remove_from_queue_black_24px.svg"></md-icon>
+							<md-icon ng-click="zoomin(x.dashboard, x.name)" md-svg-src="../icon/ic_add_to_queue_black_24px.svg"></md-icon>
 						</div>
-						<md-icon ng-click="deleteGraph(x.dashboard, x.name)" md-svg-src="../icon/ic_highlight_off_black_24px.svg"></md-icon>
-						<md-icon ng-click="zoomout(x.dashboard, x.name)" md-svg-src="../icon/ic_remove_from_queue_black_24px.svg"></md-icon>
-						<md-icon ng-click="zoomin(x.dashboard, x.name)" md-svg-src="../icon/ic_add_to_queue_black_24px.svg"></md-icon>
-						</md-card-actions>
-					<div style="height: 400px" id="{{x.dashboard}}_{{x.name}}"></div>
+					</md-card-actions>
+					<div style="display:none; height:400px" id="{{x.dashboard}}_{{x.name}}"></div>
+					<div style="height:400px" id="{{x.dashboard}}_{{x.name}}_loader" layout="row" layout-align="center center">
+						<div class="loader"></div>
+					</div>	
 				</md-card>
 				<!--<div>-->
 			</div>
