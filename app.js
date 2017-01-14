@@ -36,36 +36,51 @@ module.exports = app;
 
  
 
-
-
-
 	/////////////////////////////////////////////////////////////////////////////
+	//  Freitag
+	//		integration des alten codes in die neue applikation
+	//		rename der route der alten app
+	//		rename der route der neuen app
+	//		integrate demo datatable in den sichtbaren Bereich
+	//		integrate demo datatable in den nicht sichtbaren Bereich (ng-Repeat)
+	//		mache die demo datatable sichtbar wenn search console ausgewählt wurde
+	//		schreibe eine zweite tabelle für den request answer aus search console
+	//		speichere die request answer in ein array mit [{graphname_dashboard : jsonAnswer}]
+	//		befülle die zweite tabelle mit daten aus dem answer des requests
+	//		14:00
 	//
-	//	Prototype: 
-	//  Mittwoch Graphen anzeigen (Fehlersuche)
-	//	TODO Search Console Tabelle anzeigen der Daten/ Key numbers (in der neuen Graphenauswahl)
-	//		 Tabelle bei der Graphenauswahl integrieren -> Auswahl liefert alle key metrics
-	//	TODO Manuels Frontend
-	//  
-	//  Donnerstag
-	//  TODO Jira Integration
+	//		Plane das Manuel Frontend in Bluemix
+	//		Manuels Frontend in Bluemix
+	//		Mehrere Brands in einem Graph erlauben (Space)
+	//		Für jeden Space ein Level
+	//		Auswahl aus Leveln soll möglich sein, level sind in total, all, country
+	//		Speichere Auswahl in der Database im Graph
+	//		Mehrere Request
+	//		Adde Dataseries
+	//		17:00	
+	//
+	//		Integrate Bosch Daschboard Code (Anmeldung) in Dashboard Prototype
+	//      http://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
+	//		18:00
+	//
+	//
+	//	Samstag
 	//  TODO Drag n Drop
 	// 	TODO Größe der Graphen stretchen
 	//  TODO Löschen der Graphen in der Database
 	//	TODO Login Load Dashboard
 	//  TODO Load graphs at beginning
 	//  TODO Disable scrolling on dialog opening
-	//
-	//  Freitag
-	//  TODO Fehlersuche
 	//  TODO Code cleaning
 	//  TODO Minimum Data is one day
-	//	TODO Promises
-	//  TODO Oboe.js streaming (JSON.stream()), Geschwindigkeit)
-	//	TODO Dynamisches Binden und erstellen von Variablen/ Divs etc.
+	//	TODO Promises, Oboe.js streaming, JSON.stream, Geschwindigkeit
+	//	TODO Annotation, Timeline
 	//
     ///////////////////////////////////////////////////////////////////////////////
     //
+    //	TODO Jira, Dokumetation
+    //  TODO Promises, Oboe.js streaming (JSON.stream()), Geschwindigkeit
+    //  TODO Increase page spead with Grunt: https://www.sitepoint.com/5-minutes-to-min-safe-angular-code-with-grunt/
 	//	TODO Annotation, Timeline, Share Dashboards
 	//	TODO Handle streams with oboe.js
 	//	TODO Error Search
@@ -84,8 +99,6 @@ module.exports = app;
 	//  TODO res status uniformity
 	//  TODO Dokumentation
 	//  TODO Finishing, error search, Frontend, Documentation, Validations
-	//
-	//  First Version
 	//	TODO error feedback if name is used already
 	//	TODO Same to google analytics
 	//	TODO make request to google analytics
@@ -107,19 +120,13 @@ module.exports = app;
 	//	TODO Promises (node.js way)
 	//	TODO Multilanguage
 	//  TODO Optional (Check nejo4 graphdatabase/ Hadoop)
+	// 	TODO Promises, Script Injection für die Bibliotheken, Security
+	//	TODO Streaming, Graphdatabase nejo4, Social Media, Hadoop
 	//
-	//////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
 	//
-	//	*
-	// 	Promises, Script Injection für die Bibliotheken, Security
-	//	Streaming, Graphdatabase nejo4, Social Media, Hadoop
-	//
-	//////////////////////////////////////////////////////////////////////////////
-	//
-	//  Code Fragments:
-	//
-	//	Datepicker example is adopted from https://plnkr.co/edit/eV2Kmt?p=preview
-	//	http://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
+	//  TODO Code Fragments:	//
+	//	TODO Datepicker example is adopted from https://plnkr.co/edit/eV2Kmt?p=preview
 	//
 	/////////////////////////////////////////////////////////////////////////////
 	
