@@ -54,7 +54,7 @@ angular.module('analytics')
       		var data = JSON.stringify(res.data);
       		
     		// this callback will be called asynchronously, when the response is available    	
-    		alert("loading dashboard");
+    		//alert("loading dashboard");
     		
     		//TODO oboe.js for streaming and resolving results
      		

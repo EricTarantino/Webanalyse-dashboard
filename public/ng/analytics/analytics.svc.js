@@ -26,7 +26,7 @@ angular.module('analytics')
 	  	  
   	  var req = {
  	  	method: 'GET',
- 		url: 'https://dashboard-proto.mybluemix.net/api/graphdata',
+ 		url: 'https://prototype-84629.mybluemix.net/api/graphdata',
  		headers: {'useremail':useremail, 'dashboard':dashboard, 'name': name },
  		//cache: true
   	  }
@@ -35,7 +35,7 @@ angular.module('analytics')
       $http( req ).then(function successCallback(res) {
       	
       		var graph = JSON.stringify(res.data);
-      		alert("got graph")
+      		//alert("got graph")
     		// this callback will be called asynchronously, when the response is available    	
     		//alert("in response data " + graph);
 

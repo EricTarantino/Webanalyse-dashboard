@@ -37,19 +37,12 @@ module.exports = app;
  
 
 	/////////////////////////////////////////////////////////////////////////////
-	//  Freitag
-	//		integration des alten codes in die neue applikation
-	//		rename der route der alten app
-	//		rename der route der neuen app
-	//		integrate demo datatable in den sichtbaren Bereich
+	//  Sonntag
 	//		integrate demo datatable in den nicht sichtbaren Bereich (ng-Repeat)
 	//		mache die demo datatable sichtbar wenn search console ausgewählt wurde
 	//		schreibe eine zweite tabelle für den request answer aus search console
 	//		speichere die request answer in ein array mit [{graphname_dashboard : jsonAnswer}]
 	//		befülle die zweite tabelle mit daten aus dem answer des requests
-	//		14:00
-	//
-	//		Plane das Manuel Frontend in Bluemix
 	//		Manuels Frontend in Bluemix
 	//		Mehrere Brands in einem Graph erlauben (Space)
 	//		Für jeden Space ein Level
@@ -57,24 +50,18 @@ module.exports = app;
 	//		Speichere Auswahl in der Database im Graph
 	//		Mehrere Request
 	//		Adde Dataseries
-	//		17:00	
-	//
 	//		Integrate Bosch Daschboard Code (Anmeldung) in Dashboard Prototype
 	//      http://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
-	//		18:00
-	//
-	//
-	//	Samstag
-	//  TODO Drag n Drop
-	// 	TODO Größe der Graphen stretchen
-	//  TODO Löschen der Graphen in der Database
-	//	TODO Login Load Dashboard
-	//  TODO Load graphs at beginning
-	//  TODO Disable scrolling on dialog opening
-	//  TODO Code cleaning
-	//  TODO Minimum Data is one day
-	//	TODO Promises, Oboe.js streaming, JSON.stream, Geschwindigkeit
-	//	TODO Annotation, Timeline
+	//  	Löschen der Graphen in der Database
+	//		Login Load Dashboard
+	//  	Load graphs at beginning
+	//  	Scrolling up on dialog opening
+	//		Annotation
+	// 		Drag n Drop
+	//		Timeline
+	//  	Minimum Data is one day
+	//  	Code cleaning
+	//		Promises, Oboe.js streaming, JSON.stream, Geschwindigkeit
 	//
     ///////////////////////////////////////////////////////////////////////////////
     //

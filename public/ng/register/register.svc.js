@@ -20,7 +20,7 @@ angular.module('register')
   //use user input date and default date 
   svc.register = function (username, password,  useremail, userrights, mmdbStartDate, mmdbEndDate) {
   	//this could be posted with user, just to see better
-	alert(2)
+	//alert(2)
 	
 	//The mmdbSpace are the userrights in the beginning
     return $http.post('/api/user', {

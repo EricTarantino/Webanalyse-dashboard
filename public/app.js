@@ -1,7 +1,7 @@
 
 //TODO: Code best practice
 
-angular.module('app', ['dndLists', 'ngMaterial', 'animate', 'management', 'analytics', 'materialHilfe', 
+angular.module('app', ['ngMaterial', 'ngSanitize', 'ngMdIcons', 'mdDataTable', 'dndLists', 'animate', 'management', 'analytics', 'materialHilfe', 
 	'post', 'register', 'router', 'graphpicker', 'sidebar', 'material.svgAssetsCache', 'demo']); //'datepicker'
 	
 
@@ -281,6 +281,7 @@ angular.module('app').controller('ApplicationCtrl', function ($scope, $state, $l
   		vm.useremail = user.useremail;
     	vm.username = user.username;
     	vm.userrights = user.userrights; 
+    	vm.useraccess = user.userrights;
     	//alert(3)  	
     	
     	setRights(user.userrights);  

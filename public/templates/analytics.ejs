@@ -1,13 +1,25 @@
+<!-- angualar-lodash -->
+<script src="/lib/lodash/lodash.min.js"></script>
+
+<style>
+	/* this is important! Set the height to your need */
+	.md-virtual-repeat-container{
+		height: 296px;
+	}
+</style>
+
 <div layout = "row">
 	<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12"  style = "background-color: #ffffff">
-		<div ng-controller="analyticsCtrl">
-			<!--div  ng-controller="analyticsGraph1Ctrl" -->
+		
+		<div ng-controller="analyticsCtrl" layout-margin>
+			<!--graphs-->
+			
 			<div ng-repeat="x in mygraphs track by $index">						
 				<!--<div class="slide-animate" ng-include="./graphs/3dGraph.ejs"></div>-->
 				<!--Die Id lautet:  {{x.dashboard}}_{{x.name}}. Buttons zum schließen, vergrößern, verkleinern, zoomen-->
 				<!--<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">-->		
 				<md-card>
-					<md-card-actions  id="{{x.dashboard}}_{{x.name}}_card_actions" style="display: none; padding:0px" layout="row" layout-sm="column" layout-align="end center" layout-wrap>
+					<md-card-actions  id="{{x.dashboard}}_{{x.name}}_card_actions" style="display: none" layout="row" layout-sm="column" layout-align="end center" layout-wrap>
 						<div ng-click="setDB(x)" layout="row" layout-align="start center" flex>
 							{{x.name}}
 							<span flex></span>
@@ -23,6 +35,47 @@
 				</md-card>
 				<!--<div>-->
 			</div>
+			
+			<!--data table-->
+			<div>
+				<md-card>
+					<md-input-container style="margin:15px;">
+						<label>Suchfilter</label>
+						<input type="text" ng-model="filterName">
+					</md-input-container>		
+					<div ng-hide="true">
+						{{(filteredItems = (nutritionList | filter: filterName))}}
+					</div>
+				</md-card>
+			</div>
+			
+			<div style="padding:8px">
+				<mdt-table 
+					virtual-repeat="true"
+					animate-sort-icon="true"
+					sortable-columns="true"
+					mdt-row="{data: filteredItems,'column-keys': ['name','calories','fat','carbs','protein','sodium','calcium','iron']}">
+					<mdt-header-row>
+					    <mdt-column align-rule="left"
+					                  column-sort="true">Dessert (100g serving)</mdt-column>
+					    <mdt-column align-rule="right"
+					                  column-sort="true">Calories</mdt-column>
+					    <mdt-column align-rule="right"
+					                  column-sort="true">Fat (g)</mdt-column>
+					    <mdt-column align-rule="right"
+					                  column-sort="true">Carbs (g)</mdt-column>
+					    <mdt-column align-rule="right"
+					                  column-sort="true">Protein (g)</mdt-column>
+					    <mdt-column align-rule="right"
+					                  column-sort="true">Sodium (mg)</mdt-column>
+					    <mdt-column align-rule="right"
+					    			  column-sort="true">Calcium (%)</mdt-column>
+					    <mdt-column align-rule="right"
+					    			  column-sort="true">Iron (%)</mdt-column>
+				    </mdt-header-row>			
+				</mdt-table>	
+			</div>
+			
 		</div>
 	</md-content>
 </div>

@@ -16,6 +16,9 @@ const https = require('https')
 var extend = require('util')._extend
 var dataTranformation = require('../modules/datatransformation.server.module.js')
 
+// for google API data
+var GoogSearchCon = require('../controllers/GoogSearchCon.server.controller.js');
+
 
 /* 
 This function is used to request the data from the server, also the transformation
@@ -52,6 +55,11 @@ exports.fetchGraphdata = function (graph, responseObject) {
 	if(graph.profile === "law & garden"){
 		webtrendsApiPath = '/v3/Reporting/spaces/124925/Keymetrics/?start_period='+graph.startDate+'&end_period='+graph.startDate+'&period_type=agg&format=json'
   	}
+  	
+	// chck if asked for gogle data
+	if (graph.profile === "google search console") { 
+		return GoogSearchCon.getGoogSearchConData(graph.startDate, graph.endDate, graph, responseObject);
+	}
 	
 	//console.log("webtrendsApiPath:" + webtrendsApiPath);
 	

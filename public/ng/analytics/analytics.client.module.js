@@ -1,1 +1,1 @@
-angular.module('analytics', ['ngMaterial'])
+angular.module('analytics', ['ngMaterial', 'ngSanitize', 'ngMdIcons', 'mdDataTable'])
