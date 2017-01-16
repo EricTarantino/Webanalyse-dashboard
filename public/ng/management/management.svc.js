@@ -10,9 +10,9 @@ angular.module('management')
  		url: '/api/management',
  		headers: header
   	}
-  	alert(JSON.stringify(req))
+  	//alert(JSON.stringify(req))
     return $http(req).then(function successCallback(res) {
-      	alert(res.data);
+      	//alert(res.data);
       	return res.data;
     		    		
   	  }, function errorCallback(data) {

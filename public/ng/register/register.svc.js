@@ -21,13 +21,13 @@ angular.module('register')
   svc.register = function (username, password,  useremail, userrights, mmdbStartDate, mmdbEndDate) {
   	//this could be posted with user, just to see better
 	//alert(2)
-	
+	var _userrights = "Gesamt"
 	//The mmdbSpace are the userrights in the beginning
     return $http.post('/api/user', {
-      username: username, password: password, useremail: useremail, userrights:userrights, userdashboards: [],
+      username: username, password: password, useremail: useremail, userrights:_userrights, userdashboards: [],
       mmdbAccess: userrights, mmdbStartDate : mmdbStartDate, mmdbEndDate : mmdbEndDate
     }).then( function () {
-      alert("login")
+      //alert("login")
       return svc.login(useremail, password)
     })
   }

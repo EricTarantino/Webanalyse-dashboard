@@ -182,7 +182,7 @@ function updateChart(_graph) {
 			var _res = str.split(",");
 			var res = [];
 			//alert("res1: "+res)
-			alert("str.split 1 "+str);	
+			//alert("str.split 1 "+str);	
 			//alert("iArray1: "+integerArray);			
 			for( var i = 0; i < _res.length; i++ ) {
 				res.push(parseInt( _res[i], 10 ));
@@ -221,7 +221,7 @@ function updateChart(_graph) {
 			
 			
 		} catch (e){
-			alert("made a mistake")
+			//alert("made a mistake")
 		}
 }	
 	

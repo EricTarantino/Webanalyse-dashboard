@@ -4,8 +4,8 @@ angular.module('analytics')
 
   $scope.customFullscreen = true;
   $scope.test = null;
-  $scope.currentDB = "test";
-  $scope._CDB = $scope.CDB;
+  $scope.currentDB = "";
+
   
   $scope.analyticsGraph1Show = true;
   $scope.analyticsGraph2Show = true;
@@ -14,12 +14,23 @@ angular.module('analytics')
   
   $scope.test = true;
   
+  $scope.datatable = [
+		{
+            protein: 4.0,
+            sodium: 87,
+            calcium: '14%',
+            iron: '1%'
+        }];
+        
+  $scope.datatableString;
+  $scope.datatableJSON;
+  
   //function for zoomin
   $scope.zoomin = zoomin;
   $scope.zoomout = zoomout;
   
   //function for showing a toast
-  $scope.showSimpleToast = showSimpleToast;
+  //$scope.showSimpleToast = showSimpleToast;
   
   //variables for the graph setting in new graph dialog, variables to hold the user input
   $scope.graphSetting = {
@@ -30,15 +41,34 @@ angular.module('analytics')
   	endDate: '',
   };
   
-  //selected row callback
-	$scope.selectedRowCallback = function(rows){
-        $mdToast.show(
-            $mdToast.simple()
-               .content('Selected row id(s): '+rows)
-               .hideDelay(3000)
-        );
-    };
-
+	$scope.refreshList = function (){
+		$scope.nutritionList = [
+		{
+            id: 601,
+            name: 'Frozen',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            sodium: 87,
+            calcium: '14%',
+            iron: '1%'
+        },
+        {
+            id: 604,
+            name: 'Cupkake',
+            calories: 305,
+            fat: 3.7,
+            carbs: 67,
+            protein: 4.3,
+            sodium: 413,
+            calcium: '3%',
+            iron: '8%'
+        }];
+        
+        $scope.$apply();
+        
+	}
 	
 	//This is a test data List, angular data table
     $scope.nutritionList = [
@@ -154,6 +184,36 @@ angular.module('analytics')
          }
 	];	
   
+  $scope.topIndex = 0;
+  
+  $scope.click = function()
+        {
+        	$scope.topIndex = 0;
+        }
+        
+  $scope.deleteRowCallback = function(rows){
+      /*$mdToast.show(
+          $mdToast.simple()
+              .content("Deleted")
+              .hideDelay(3000)
+              .position('bottom center')
+      );
+      */
+     alert("Elemente gelöscht")
+  };
+  
+  $scope.selectedRowCallback = function(rows){
+  	  /*
+      $mdToast.show(
+	      $mdToast.simple()
+	         .content("Selected")
+	         .hideDelay(3000)
+	         .position('bottom center')
+      );
+      */
+      alert("Zeilenauswahl")
+  };
+  
   /*This funciton is called by the delete button in the analytics view.
   this function deletes a dashboard, emits delete to the app controller
   the dashboard is taken out of the database. If the delete request is sucessful,
@@ -168,15 +228,21 @@ angular.module('analytics')
   	$scope.$emit('deleteGraph', [db_name, graph_name]);
   	DBSvc.deleteDB(db_name, graph_name, $scope);	
   }
-  
+
   $scope.setDB = function(db_name){
-  	$scope.$emit('currentDBChange', [db_name]);	  	  	
+  	//alert(db_name);
+  	$scope.$emit('currentDBChange', [db_name]);
+  	$scope.currentDB = db_name;
+  	$scope.CDB = db_name;
+  	//alert(db_name)
     //TODO getDashboardGraphs - for every graph: get plot data run through array    
   }
   
   $scope.$on('currentDBChange', function(event, answer){
   	var result = document.getElementById("newGraphButton");
   	var result1 = document.getElementById("newGraphButtonDisabled");
+  	
+  	
   	if(answer[0]===null){  		
   		result.style.display='none';
   		result1.style.display='block';	  	
@@ -186,6 +252,7 @@ angular.module('analytics')
 	}
   	
   	$scope.currentDB = answer[0];
+  	$scope.CDB = answer[0];
   })
   
   $scope.$on('newGraphBroadcast', function(event, answer) {
@@ -195,7 +262,7 @@ angular.module('analytics')
   	
   	//set up the chart, it is allready appended to lis with ng-repeat
   	
-  	alert("ein neuer graph wurde gebroadcasted, scope.cdb ist "+ $scope._CDB);
+  	//alert("ein neuer graph wurde gebroadcasted, scope.cdb ist "+ $scope._CDB);
     //alert("the answer after broadcast: "+ JSON.stringify(answer[0]))	
     //After postGraph use getGraph just like in login      
     AnalyticsSvc.newGraph(answer[0], $scope);
@@ -228,7 +295,7 @@ angular.module('analytics')
       
       //Alerts the Javascript object from the answer
       //alert("the answer: "+ JSON.stringify(answer))   
-      alert("new graph");
+      //alert("new graph");
       $scope.$emit('newGraph', [answer]);
       //After postGraph use getGraph just like in login 
       
@@ -263,23 +330,25 @@ angular.module('analytics')
   	
   	//The options available in the frontend /////////////////////////////////////
   	//Kategorien in new graph dialog
-    $scope.kategories = ('Keine,K1,K2,K3,K4').split(',').map(function(kategorie) {
+  	
+    $scope.kategories = ('Keine,Vorstand,Management,Lawn and garden,Professional').split(',').map(function(kategorie) {
   		return {abbrev: kategorie};
   	});
   	
+  	
   	//graphs in new gaph dialog
-    $scope.graphs = ('3D Bar,Linie mit Labeln,Buntes Säulendiagramm').split(',').map(function(graph) { //, Linie mit Labeln, Buntes Säulendiagramm
+    $scope.graphs = ('3D Bar,Linie mit Labeln').split(',').map(function(graph) { //, Linie mit Labeln, Buntes Säulendiagramm
   		return {abbrev: graph};
     });
     
   	//graphs in new gaph dialog
-    $scope.methods = ('key metrics for all profiles').split(',').map(function(method) {
+    $scope.methods = ('Views').split(',').map(function(method) {
   		return {abbrev: method};
     });
     
 	//graphs in new gaph dialog
 	// $scope.profiles = ('bosch do it desktop,law und garden').split(',').map(function(profile) { //,law und garden
-	$scope.profiles = ('bosch do it desktop,law und garden,google search console').split(',').map(function(profile) { //,law und garden
+	$scope.profiles = ('bosch do it desktop,google search console').split(',').map(function(profile) { //,law und garden
 		return {
 			abbrev: profile
 		};
@@ -303,34 +372,33 @@ angular.module('analytics')
 	if (!($scope.selectedName === '' || $scope.selectedKategorie === '' || $scope.selectedGraph === '' ||
 				$scope.selectedMethod === '') || !($scope.selectedProfile === '')) {
 
-      	var dayEnd = '';
-		if(parseInt($scope.endDate.getDate(), 10) < 10){
-			dayEnd = "0"+$scope.endDate.getDate() 
-		}else{
-			dayEnd = $scope.endDate.getDate()
-		}
-		
-		var monthEnd = '';
-		if(parseInt($scope.endDate.getMonth(), 10) < 10){
-			monthEnd = "0"+$scope.endDate.getMonth() 
-		}else{
-			monthEnd = $scope.endDate.getMonth()
-		}
-		
-		var dayStart = '';
-		if(parseInt($scope.startDate.getDate(), 10) < 10){
-			dayStart = "0"+$scope.startDate.getDate() 
-		}else{
-			dayStart = $scope.startDate.getDate()
-		}		
-		
-		var monthStart = '';
-		if(parseInt($scope.startDate.getMonth(), 10) < 10){
-			monthStart = "0"+$scope.startDate.getMonth() 
-		}else{
-			monthStart = $scope.startDate.getMonth()
-		}
-		alert("answer 2")
+      	//parse the day, if it is a single digit, prepend a zero
+			var dayStart = parseInt($scope.startDate.getDate(), 10);
+			if(dayStart <= 9){
+				dayStart = "0"+dayStart;
+			}
+			//alert("parsed start date day "+dayStart);			
+			
+			//Month is by default January as 0, so we have to add 1 to match Webtrends API;
+			var monthStart = parseInt($scope.startDate.getMonth(), 10)+1;			
+			if(monthStart <= 9){
+				monthStart = "0"+monthStart;
+			}
+			//alert("parsed start date month "+monthStart);		
+
+			//parse the day, if it is a single digit, prepend a zero		
+			var dayEnd = parseInt($scope.endDate.getDate(), 10);
+			if(dayEnd <= 9){
+				dayEnd = "0"+dayEnd;
+			}
+			//alert("parsed end date day "+dayEnd);			
+			
+			//Month is by default January as 0, so we have to add 1 to match Webtrends API;
+			var monthEnd = parseInt($scope.endDate.getMonth(), 10)+1;			
+			if(monthEnd <= 9){
+				monthEnd = "0"+monthEnd;
+			}
+		//alert("answer 2")
 		//build the 
 	  	var answer = {
 	  		"useremail": "",
@@ -340,12 +408,19 @@ angular.module('analytics')
 	  		"graph": $scope.selectedGraph, 
 	  		"method": $scope.selectedMethod, 
 	  		"profile": $scope.selectedProfile, 
-	  		"startDate": ""+$scope.startDate.getFullYear()+"m"+(parseInt(monthStart)+1)+"d"+(parseInt(dayStart))+"h00", 
-	  		"endDate": ""+$scope.endDate.getFullYear()+"m"+(parseInt(monthEnd)+1)+"d"+(parseInt(dayEnd))+"h00",
+	  		"startDate": ""+$scope.startDate.getFullYear()+"m"+monthStart+"d"+dayStart+"h00", 
+	  		"endDate": ""+$scope.endDate.getFullYear()+"m"+monthEnd+"d"+dayEnd+"h00",
 	  		"xplot": [],
 	  		"yplot": []
 	  	};
 	  	
+	  	if(answer.profile==="google search console"){
+	  		var startDate = String($scope.startDate.getFullYear()) + "-" + monthStart + "-" + dayStart;
+	  		var endDate   = String($scope.endDate.getFullYear()) + "-" +  monthEnd + "-" + dayEnd;	
+		  	answer.startDate = startDate;
+		  	answer.endDate = endDate; 
+	  	}
+	  		  	
 	  	/*//TODO Check if name is taken and give out warning that name has been used
 	  	var isNewName = true;
 	  	alert("answer 3")
@@ -423,7 +498,7 @@ angular.module('analytics')
   	
   	//The options available in the frontend //
   	//Kategorien in new graph dialog
-    $scope.kategories = ('Keine,K1,K2,K3,K4').split(',').map(function(kategorie) {
+    $scope.kategories = ('Keine,Keine,Vorstand,Management,Lawn and garden,Professional').split(',').map(function(kategorie) {
   		return {abbrev: kategorie};
   	});
   	
@@ -492,6 +567,7 @@ angular.module('analytics')
 	}	
   }  
   
+  /*
   //Toast functionality
   var last = {
       bottom: false,
@@ -530,5 +606,5 @@ angular.module('analytics')
         .position(pinTo )
         .hideDelay(3000)
     );
-  }  
+  } */ 
 });

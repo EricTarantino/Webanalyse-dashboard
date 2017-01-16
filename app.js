@@ -31,33 +31,29 @@ module.exports = app;
 
 
 
-
-
-
- 
-
 	/////////////////////////////////////////////////////////////////////////////
 	//  Sonntag
-	//		integrate demo datatable in den nicht sichtbaren Bereich (ng-Repeat)
-	//		mache die demo datatable sichtbar wenn search console ausgewählt wurde
-	//		schreibe eine zweite tabelle für den request answer aus search console
-	//		speichere die request answer in ein array mit [{graphname_dashboard : jsonAnswer}]
-	//		befülle die zweite tabelle mit daten aus dem answer des requests
+	//		Aktuelles Dashboard mit x-Achse
+	//		7:00
+	//	
+	//		Manuels FrontEnd
+	//		Auswahl aus Leveln soll möglich sein, level sind in total, all, country
+	//		Zweiten Space auswählen
+	//		Wenn loader visibility in app.js invisible ist, dann starte mit Loader invisible
+	//		8:00
+	//
+	//		Login Load Dashboard
+	//  	Load graphs at beginning
+	//		Management Board Gesamt
 	//		Manuels Frontend in Bluemix
 	//		Mehrere Brands in einem Graph erlauben (Space)
 	//		Für jeden Space ein Level
-	//		Auswahl aus Leveln soll möglich sein, level sind in total, all, country
 	//		Speichere Auswahl in der Database im Graph
 	//		Mehrere Request
 	//		Adde Dataseries
-	//		Integrate Bosch Daschboard Code (Anmeldung) in Dashboard Prototype
-	//      http://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
 	//  	Löschen der Graphen in der Database
-	//		Login Load Dashboard
-	//  	Load graphs at beginning
-	//  	Scrolling up on dialog opening
-	//		Annotation
 	// 		Drag n Drop
+	//		Annotation
 	//		Timeline
 	//  	Minimum Data is one day
 	//  	Code cleaning

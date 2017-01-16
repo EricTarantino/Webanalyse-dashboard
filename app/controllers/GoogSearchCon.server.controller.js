@@ -45,7 +45,7 @@ var TOKEN_PATH = './app/controllers/webmasters-nodejs-auth.json';
 /* 
  *
  */
-exports.getGoogSearchConData = function(startdate, enddate, graph, responseObject) {
+exports.getGoogSearchConData = function(graph, responseObject) {
 	// Load client secrets from a local file. 
 	// This file is downloaded from google search console API developers page, from 
 	// Manuel's account.
@@ -59,7 +59,7 @@ exports.getGoogSearchConData = function(startdate, enddate, graph, responseObjec
 		// var mySites = authorize(JSON.parse(content), listSites);
 		// var myQueryData = authorize(JSON.parse(content), mySites.siteEntry[0].siteUrl, getSitesQuery);
 
-		authorize(JSON.parse(content), getSitesQuery, startdate, enddate, graph, responseObject);
+		authorize(JSON.parse(content), getSitesQuery, graph, responseObject);
 	});
 }
 
@@ -71,7 +71,7 @@ exports.getGoogSearchConData = function(startdate, enddate, graph, responseObjec
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials, callback, startdate, enddate, graph, responseObject) {
+function authorize(credentials, callback, graph, responseObject) {
 	var clientSecret = credentials.installed.client_secret;
 	var clientId = credentials.installed.client_id;
 	var redirectUrl = credentials.installed.redirect_uris[0];
@@ -81,10 +81,10 @@ function authorize(credentials, callback, startdate, enddate, graph, responseObj
 	// Check if we have previously stored a token.
 	fs.readFile(TOKEN_PATH, function(err, token) {
 		if (err) {
-			getNewToken(oauth2Client, callback, startdate, enddate, responseObject);
+			getNewToken(oauth2Client, callback, graph, responseObject);
 		} else {
 			oauth2Client.credentials = JSON.parse(token);
-			callback(oauth2Client, null, startdate, enddate, responseObject);
+			callback(oauth2Client, null, graph, responseObject);
 		}
 	});
 }
@@ -98,7 +98,7 @@ function authorize(credentials, callback, startdate, enddate, graph, responseObj
  *     client.
  */
 
-function getNewToken(oauth2Client, callback, startdate, enddate, responseObject) {
+function getNewToken(oauth2Client, callback, graph, responseObject) {
 	var authUrl = oauth2Client.generateAuthUrl({
 		access_type: 'offline',
 		scope: SCOPES
@@ -117,7 +117,7 @@ function getNewToken(oauth2Client, callback, startdate, enddate, responseObject)
 			}
 			oauth2Client.credentials = token;
 			storeToken(token);
-			callback(oauth2Client, null, startdate, enddate, responseObject);
+			callback(oauth2Client, null, graph, responseObject);
 		});
 	});
 }
@@ -166,14 +166,18 @@ function listSites(auth) {
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function getSitesQuery(auth, website, startdate, enddate, responseObject) {
+function getSitesQuery(auth, website, graph, responseObject) {
 	// assign defaults
 	website = website || "http://www.bosch-pt.de/";
-	startdate = startdate || "2016-12-22";
-	enddate = enddate || "2016-12-29";
 	
-	startdate =  "2016-12-22";
-	enddate =  "2016-12-29";
+	console.log(startDate)
+	console.log(endDate)
+	
+	var startDate = graph.startDate;
+	var endDate = graph.endDate;
+	
+	//var startdate =  "2016-12-22";
+	//var enddate =  "2016-12-29";
 	website = "http://www.bosch-pt.de/";
 
 	// google service
@@ -183,8 +187,8 @@ function getSitesQuery(auth, website, startdate, enddate, responseObject) {
 		auth: auth,
 		siteUrl: encodeURIComponent(website),
 		resource: {
-			startDate: startdate,
-			endDate: enddate,
+			startDate: startDate,
+			endDate: endDate,
 			dimensions: ['query', 'page', 'country', 'device'] // these columns will be returned from the google API
 		}
 	};
@@ -209,11 +213,18 @@ function getSitesQuery(auth, website, startdate, enddate, responseObject) {
 			}
 			
 			if(!err){
-				responseObject.status(207).send("successfully loaded into search console mongo");
+				try{
+					collection.findOne( function(err, _graph) {
+  					//graph.xplot = JSON.stringify(_graph);
+  					graph.xplot = JSON.stringify(_graph.rows);
+  					responseObject.status(200).json(graph);
+					});
+				}catch(e){
+					console.log("can not parse graph datatable to json")	
+					responseObject.status(304);
+				}				
 			}
-		});
-
-		
+		});	
 		
 		/*
 		// create the writable stream 
@@ -228,7 +239,6 @@ function getSitesQuery(auth, website, startdate, enddate, responseObject) {
 			return responseObject.status(200).send("succesfully loaded into search console mongo");
 		}).then(console.log("end of stream"));
 		*/
-			
 	})
 }
 

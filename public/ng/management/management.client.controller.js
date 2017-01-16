@@ -28,9 +28,9 @@
 		vm.percentLeads  = "+ 3.0 %";
 		
 		//this variable defines the number, it depends on the access right
-		vm.umsatz = { Gesamt: "45,607 Mrd", DIY: "0", PRO: "0", HG: "0" } 
-		vm.visits = { Gesamt: "18,98 Mio", DIY: "0", PRO: "0", HG: "0" }
-		vm.leads  = { Gesamt: "12,31 Mio", DIY: "0", PRO: "0", HG: "0" }
+		vm.umsatz = { Gesamt: "-", DIY: "0", PRO: "0", HG: "0" } 
+		vm.visits = { Gesamt: "-", DIY: "0", PRO: "0", HG: "0" }
+		vm.leads  = { Gesamt: "-", DIY: "0", PRO: "0", HG: "0" }
 		
 		vm.accessRight = null;
 		
@@ -70,7 +70,27 @@
 			}
 		}
 		
-		function refreshManagementDB(){
+		$scope.vonRefreshed = false;
+		$scope.bisRefreshed = false;
+		
+		function refreshManagementDB(von){
+			
+			if(von===true){
+				$scope.vonRefreshed = true;
+				
+				if($scope.bisRefreshed === false){					
+					return	
+				}
+			}
+			
+			if(von===false){
+				$scope.bisRefreshed = true;
+				if($scope.vonRefreshed === false){					
+					return	
+				}
+			}
+			
+			
 			//on refresh data, make a post to change the time range, on succes, 
 			//receive the new management dashboard
 			//alert("start date "+$scope.mmdbStartDate);
@@ -87,6 +107,10 @@
 			//this may needs to be a module for itself	
 			//depending on the data source, there may 
 			//be different transormation needed	
+  	     	var managementCards = document.getElementById("managementCards");
+    	   	var managementLoader = document.getElementById("managementLoader");
+       		managementCards.style.visibility = 'hidden';
+       		managementLoader.style.display = 'block';
 			
 			//parse the day, if it is a single digit, prepend a zero
 			var dayStart = parseInt($scope.mmdbStartDate.getDate(), 10);
@@ -116,19 +140,19 @@
 			}
 			//alert("parsed end date month "+monthEnd);
 			
-			var startDate = String($scope.mmdbStartDate.getFullYear()) + "m" + monthStart + "d" + dayStart + "h00";
-	  		var endDate   = String($scope.mmdbEndDate.getFullYear())   + "m" + monthEnd   + "d" + dayEnd   + "h00";
-	  		
-			//alert( "start Date " + startDate );
-			//alert( "end Date "   + endDate   );
+			var startDate = ""+$scope.mmdbStartDate.getFullYear()+"m"+monthStart+"d"+dayStart+"h00";
+	  		var endDate   = ""+$scope.mmdbEndDate.getFullYear()+"m"+monthEnd+"d"+dayEnd+"h00";
 			
 			ManagementSvc.changeTimeRange(startDate, endDate)
 			.then(function(data){
-				alert("got the result "+data);
-				alert("got the result "+JSON.stringify(data));
+				//alert("got the result "+data);
+				//alert("got the result "+JSON.stringify(data));
 				vm.umsatz.Gesamt = JSON.parse(data).PageViews;
 				vm.visits.Gesamt = JSON.parse(data).Visits;
 				vm.leads.Gesamt = JSON.parse(data).Visitors;
+				
+	       		managementCards.style.visibility = 'visible';
+	       		managementLoader.style.display = 'none';
 			})
 		}
 		
@@ -139,12 +163,19 @@
 		
 		function accessChange(useraccess){
 			//alert("currentDB is: " + vm.currentDB)
+			var managementCards = document.getElementById("managementCards");
+    	   	var managementLoader = document.getElementById("managementLoader");
+       		managementCards.style.visibility = 'hidden';
+       		managementLoader.style.display = 'block';
 			ManagementSvc.changeAccess(useraccess[0])
 			//Use the return data to change the key indicators
 			.then(function(data){
 				vm.umsatz.Gesamt = JSON.parse(data).PageViews;
 				vm.visits.Gesamt = JSON.parse(data).Visits;
 				vm.leads.Gesamt = JSON.parse(data).Visitors;
+
+	       		managementCards.style.visibility = 'visible';
+	       		managementLoader.style.display = 'none';
 			})
 		}
 				

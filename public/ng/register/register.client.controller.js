@@ -61,7 +61,7 @@
 		
 	  		user.mmdbStartDate = ""+yesterday.getFullYear()+"m"+(parseInt(monthStart)+1)+"d"+(parseInt(dayStart))+"h00";
 	  		user.mmdbEndDate = ""+endDate.getFullYear()+"m"+(parseInt(monthEnd)+1)+"d"+(parseInt(dayEnd))+"h00";  
-	  		alert(1)
+	  		//alert(1)
        		//alert(JSON.stringify(user));
        		
         	RegisterSvc.register(user.name, user.password,  user.email, user.rights, user.mmdbStartDate, user.mmdbEndDate)

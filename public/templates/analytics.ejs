@@ -4,43 +4,154 @@
 <style>
 	/* this is important! Set the height to your need */
 	.md-virtual-repeat-container{
-		height: 296px;
+		height: 350px;
 	}
+	thead, tbody tr {
+		table-layout:fixed;/* even columns width , fix width of table too*/
+	}	
+
 </style>
 
-<div layout = "row">
-	<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12"  style = "background-color: #ffffff">
-		
-		<div ng-controller="analyticsCtrl" layout-margin>
-			<!--graphs-->
+<div ng-controller="analyticsCtrl">
+
+	<!--<p>Aktuelles Dashboard: {{currentDB}}</p>-->
+	<p>Aktuelles Dashboard: {{CDB}}</p>
+
+	<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">		
+		<!--graphs-->			
+		<div ng-repeat="x in mygraphs track by $index" layout-margin>						
+			<!--<div class="slide-animate" ng-include="./graphs/3dGraph.ejs"></div>-->
+			<!--Die Id lautet:  {{x.dashboard}}_{{x.name}}. Buttons zum schließen, vergrößern, verkleinern, zoomen-->
+			<!--<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">-->	
 			
-			<div ng-repeat="x in mygraphs track by $index">						
-				<!--<div class="slide-animate" ng-include="./graphs/3dGraph.ejs"></div>-->
-				<!--Die Id lautet:  {{x.dashboard}}_{{x.name}}. Buttons zum schließen, vergrößern, verkleinern, zoomen-->
-				<!--<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">-->		
-				<md-card>
-					<md-card-actions  id="{{x.dashboard}}_{{x.name}}_card_actions" style="display: none" layout="row" layout-sm="column" layout-align="end center" layout-wrap>
-						<div ng-click="setDB(x)" layout="row" layout-align="start center" flex>
-							{{x.name}}
-							<span flex></span>
-							<md-icon ng-click="deleteGraph(x.dashboard, x.name)" md-svg-src="../icon/ic_highlight_off_black_24px.svg"></md-icon>
-							<md-icon ng-click="zoomout(x.dashboard, x.name)" md-svg-src="../icon/ic_remove_from_queue_black_24px.svg"></md-icon>
-							<md-icon ng-click="zoomin(x.dashboard, x.name)" md-svg-src="../icon/ic_add_to_queue_black_24px.svg"></md-icon>
-						</div>
-					</md-card-actions>
-					<div style="display:none; height:400px" id="{{x.dashboard}}_{{x.name}}"></div>
-					<div style="height:400px" id="{{x.dashboard}}_{{x.name}}_loader" layout="row" layout-align="center center">
-						<div class="loader"></div>
+			<!--graph-->
+			<md-card style:"padding:8px">
+				<md-card-actions  id="{{x.dashboard}}_{{x.name}}_card_actions" style="display: none" layout="row" layout-sm="column" layout-align="end center" layout-wrap>
+					<div ng-click="setDB(x)" layout="row" layout-align="start center" flex>
+						{{x.name}}
+						<span flex></span>
+						<md-icon ng-click="deleteGraph(x.dashboard, x.name)" md-svg-src="../icon/ic_highlight_off_black_24px.svg"></md-icon>
+						<md-icon ng-click="zoomout(x.dashboard, x.name)" md-svg-src="../icon/ic_remove_from_queue_black_24px.svg"></md-icon>
+						<md-icon ng-click="zoomin(x.dashboard, x.name)" md-svg-src="../icon/ic_add_to_queue_black_24px.svg"></md-icon>
+					</div>
+				</md-card-actions>
+				<div style="display:none; height:400px" id="{{x.dashboard}}_{{x.name}}"></div>
+				<div style="height:400px" id="{{x.dashboard}}_{{x.name}}_loader" layout="row" layout-align="center center">
+					<div class="loader">
+					</div>
+				</div>	
+			</md-card>						
+						
+			<md-content style = "background-color: #ffffff">
+				<div layout-margin id="{{x.dashboard}}_{{x.name}}_datatable" style="visibility:hidden">
+					<!--data table-->
+					<div>
+						<md-card>
+							<md-input-container style="margin:15px;">
+								<label>Suchfilter fixed data table</label>
+								<input type="text" ng-model="filterTable">
+							</md-input-container>		
+							<div ng-hide="true">
+								{{(filteredItems = (datatable | filter: filterTable))}}
+							</div>
+						</md-card>
+					</div>
+					
+					<div style="padding:8px">
+						<mdt-table 
+							table-card="{visible: true, title: 'Search Console', columnSelector: true}"
+						    selectable-rows="true"
+             				alternate-headers="'contextual'"             
+         					delete-row-callback="deleteRowCallback(rows)"
+         					selected-row-callback="selectedRowCallback(rows)"
+							virtual-repeat="true"
+							animate-sort-icon="true"
+							sortable-columns="true"
+							mdt-row="{data: filteredItems,'column-keys': ['land', 'seite', 'protein','sodium','calcium','iron']}">
+							
+							<mdt-header-row>
+								<mdt-column align-rule="left"
+											exclude-from-column-selector="true"
+							                  column-sort="true">Begriff</mdt-column>
+							    <mdt-column align-rule="left"
+							                  column-sort="true">Land</mdt-column>
+							    <mdt-column align-rule="right"
+							                  column-sort="true">Klicks</mdt-column>
+							    <mdt-column align-rule="right"
+							                  column-sort="true">Impressionen</mdt-column>
+							    <mdt-column align-rule="right"
+							    			  column-sort="true">Klickrate</mdt-column>
+							    <mdt-column align-rule="right"
+							    			  column-sort="true">Position</mdt-column>
+						    </mdt-header-row>
+						        						
+						</mdt-table>	
 					</div>	
-				</md-card>
-				<!--<div>-->
-			</div>
-			
-			<!--data table-->
+					<!--<md-button ng-click="click()">Top</md-button>-->
+				</div><!-- layout margin -->
+			</md-content>
+
+		</div><!-- end of ng-repeat graph and datatable area -->
+	</md-content>		
+</div>
+
+<!--
+
+<md-content style = "background-color: #ffffff">
+				<div layout-margin id="{{x.dashboard}}_{{x.name}}_datatable" style="visibility:visible">
+					<!--data table--><!--
+					<div>
+						<md-card>
+							<md-input-container style="margin:15px;">
+								<label>Suchfilter fixed data table</label>
+								<input type="text" ng-model="filterTable">
+							</md-input-container>		
+							<div ng-hide="true">
+								{{(filteredItems = (nutritionList | filter: filterTable))}}
+							</div>
+						</md-card>
+					</div>
+					
+					<div style="padding:8px">
+						<mdt-table 
+							virtual-repeat="true"
+							animate-sort-icon="true"
+							sortable-columns="true"
+							mdt-row="{data: filteredItems,'column-keys': ['name','calories','fat','carbs','protein','sodium','calcium','iron']}">
+							<mdt-header-row>
+							    <mdt-column align-rule="left"
+							                  column-sort="true">Dessert (100g serving)</mdt-column>
+							    <mdt-column align-rule="right"
+							                  column-sort="true">Calories</mdt-column>
+							    <mdt-column align-rule="right"
+							                  column-sort="true">Fat (g)</mdt-column>
+							    <mdt-column align-rule="right"
+							                  column-sort="true">Carbs (g)</mdt-column>
+							    <mdt-column align-rule="right"
+							                  column-sort="true">Protein (g)</mdt-column>
+							    <mdt-column align-rule="right"
+							                  column-sort="true">Sodium (mg)</mdt-column>
+							    <mdt-column align-rule="right"
+							    			  column-sort="true">Calcium (%)</mdt-column>
+							    <mdt-column align-rule="right"
+							    			  column-sort="true">Iron (%)</mdt-column>
+						    </mdt-header-row>			
+						</mdt-table>	
+					</div>	
+				</div><!-- layout margin --><!--
+			</md-content>
+
+
+
+
+
+	<md-content layout = "row" class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12"  style = "background-color: #ffffff">
+		<div layout-margin>
+			<!--data table--><!--
 			<div>
 				<md-card>
 					<md-input-container style="margin:15px;">
-						<label>Suchfilter</label>
+						<label>Suchfilter fixed data table</label>
 						<input type="text" ng-model="filterName">
 					</md-input-container>		
 					<div ng-hide="true">
@@ -74,13 +185,9 @@
 					    			  column-sort="true">Iron (%)</mdt-column>
 				    </mdt-header-row>			
 				</mdt-table>	
-			</div>
-			
-		</div>
+			</div>	
+		</div><!-- layout margin --><!--
 	</md-content>
-</div>
-
-<!--
 <div layout = "row">
 	<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12" >
 		<div class="simpleDemo" ng-controller="SimpleDemoController" >

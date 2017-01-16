@@ -58,7 +58,7 @@ exports.fetchGraphdata = function (graph, responseObject) {
   	
 	// chck if asked for gogle data
 	if (graph.profile === "google search console") { 
-		return GoogSearchCon.getGoogSearchConData(graph.startDate, graph.endDate, graph, responseObject);
+		return GoogSearchCon.getGoogSearchConData(graph, responseObject);
 	}
 	
 	//console.log("webtrendsApiPath:" + webtrendsApiPath);

@@ -17,7 +17,7 @@
             <label>Name</label>
             <input ng-model="selectedName">
       	  </md-input-container>
-      
+      <!--
           <md-input-container class="md-block" flex-gt-sm="">
             <label>Kategorie</label>
             <md-select ng-model="selectedKategorie">
@@ -26,9 +26,9 @@
               </md-option>
             </md-select>
           </md-input-container>
-          
+        -->  
           <md-input-container class="md-block" flex-gt-sm="">
-            <label>Graph</label>
+            <label>Typ</label>
             <md-select ng-model="selectedGraph">
               <md-option ng-repeat="graph in graphs" ng-value="graph.abbrev">
                 {{graph.abbrev}}
@@ -37,7 +37,7 @@
           </md-input-container>
           
           <md-input-container class="md-block" flex-gt-sm="">
-            <label>Method</label>
+            <label>Metrik</label>
             <md-select ng-model="selectedMethod">
               <md-option ng-repeat="method in methods" ng-value="method.abbrev">
                 {{method.abbrev}}
@@ -46,7 +46,7 @@
           </md-input-container>
           
           <md-input-container class="md-block" flex-gt-sm="">
-            <label>Profiles</label>
+            <label>Space</label>
             <md-select ng-model="selectedProfile">
               <md-option ng-repeat="profile in profiles" ng-value="profile.abbrev">
                 {{profile.abbrev}}

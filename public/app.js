@@ -47,9 +47,11 @@ angular.module('app').controller('ApplicationCtrl', function ($scope, $state, $l
 	$scope.mmdbStartDate = new Date();
 	$scope.mmdbEndDate = new Date();
 	
-	$scope.CDB = "Current Dashboard"
+
 	//data variables
 	vm.currentDB = null;	
+	
+	$scope.CDB;
 	//holds the dashboards [d1, d2, d3, d4, ... ]
 	vm.myddd = [];	
 	//holds the graphs [{graph : {useremail : "useremail", screensize: "", 
@@ -80,7 +82,7 @@ angular.module('app').controller('ApplicationCtrl', function ($scope, $state, $l
 	$scope.$on('currentDBChange', function (_, currentDB) {
 		//alert("currentDB is: " + vm.currentDB)
 		vm.currentDB = currentDB[0];
-		$scope.$broadcast('currentDBChanged', [vm.currentDB]);
+		$scope.$broadcast('currentDBChange', [vm.currentDB]);
 	});
 	
 	/*$scope.$on('firstEmpty', function (_, firstEmpty) {		
@@ -206,10 +208,10 @@ angular.module('app').controller('ApplicationCtrl', function ($scope, $state, $l
 		var newGraph = _newGraph[0];		
 		newGraph.useremail = vm.useremail;
 		//current db comes with the user data
-		alert("in new graph "+vm.currentDB);
+		//alert("in new graph "+vm.currentDB);
 		newGraph.dashboard = vm.currentDB;		
 		$scope.mygraphs.push(newGraph);  
-		alert("new"+JSON.stringify($scope.mygraphs))	  		
+		//alert("new"+JSON.stringify($scope.mygraphs))	  		
 		$scope.$broadcast('newGraphBroadcast', [newGraph]);		
 	});
 
@@ -282,7 +284,9 @@ angular.module('app').controller('ApplicationCtrl', function ($scope, $state, $l
     	vm.username = user.username;
     	vm.userrights = user.userrights; 
     	vm.useraccess = user.userrights;
+    	$scope.useraccess = user.userrights;
     	//alert(3)  	
+
     	
     	setRights(user.userrights);  
     	//alert(4)
@@ -310,7 +314,7 @@ angular.module('app').controller('ApplicationCtrl', function ($scope, $state, $l
     	//alert(9) 
   		if(user.userdashboards.length > 0){
   			vm.currentDB =  user.userdashboards[0];
-  			//$scope.currentDB = user.userdashboards[0];
+  			$scope.CDB = user.userdashboards[0];
   		}
   		//alert(10) 
     	var ngb = document.getElementById("newGraphButton");
@@ -386,7 +390,10 @@ angular.module('app').controller('ApplicationCtrl', function ($scope, $state, $l
   	//set the access depending on the user choice, not all users can choose every access
     function SetAccess(access){
   		$scope.useraccess = access;
-  		$scope.$broadcast('accessChange', [$scope.useraccess] );
+  		
+  		if(access !== "Gesamt"){
+  			$scope.$broadcast('accessChange', [$scope.useraccess] );
+  		}
   		//inject access into management root scope
   		
   		//show or hide the access Buttons on the sidebar menu
