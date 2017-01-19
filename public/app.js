@@ -1,8 +1,8 @@
 
 //TODO: Code best practice
 
-angular.module('app', ['ngMaterial', 'ngSanitize', 'ngMdIcons', 'mdDataTable', 'dndLists', 'animate', 'management', 'analytics', 'materialHilfe', 
-	'post', 'register', 'router', 'graphpicker', 'sidebar', 'material.svgAssetsCache', 'demo']); //'datepicker'
+angular.module('app', ['ngMaterial', 'ngSanitize', 'ngMdIcons', 'mdDataTable','ngAnimate', 'analytics', 'management', 
+	'register', 'router', 'sidebar', 'material.svgAssetsCache']); //'datepicker'
 	
 
 angular.module('app').controller('ApplicationCtrl', function ($scope, $state, $location, $http) { //
