@@ -34,14 +34,10 @@ module.exports = app;
 	/////////////////////////////////////////////////////////////////////////////
 	//  Sonntag
 	//		Aktuelles Dashboard mit x-Achse
-	//		7:00
-	//	
 	//		Manuels FrontEnd
 	//		Auswahl aus Leveln soll möglich sein, level sind in total, all, country
 	//		Zweiten Space auswählen
 	//		Wenn loader visibility in app.js invisible ist, dann starte mit Loader invisible
-	//		8:00
-	//
 	//		Login Load Dashboard
 	//  	Load graphs at beginning
 	//		Management Board Gesamt

@@ -15,15 +15,12 @@ function loadChart1(){
 		chart.showLoading();
 }
 
-function setUpChart(containerID, type) { //, startDate, endDate, source
+function setUpChart(containerID, type) {
 	
 		var chart = null;
-		//var titleText = ""+startDate+" bis "+endDate;
-		//var subtitleText = "Quelle: "+source;
-		//alert("type is:"+type)
+		//var titleText = ""+startDate+" bis "+endDate, var subtitleText = "Quelle: "+source;
 		if(type === "3D Bar"){
-			//alert("Set up 3D Bar")
-		    // Set up the chart depending on chart type
+			//alert("Set up 3D Bar"), Set up the chart depending on chart type
 		    chart = new Highcharts.Chart({
 		        chart: {
 		        	renderTo: containerID,
@@ -35,21 +32,12 @@ function setUpChart(containerID, type) { //, startDate, endDate, source
 		                depth: 50,
 		                viewDistance: 25
 		            }
-		        }/*,
-		        title: {
-		            text: titleText
 		        },
-		        subtitle: {
-		            text: subtitleText
-		        }*/,
 		        plotOptions: {
 		            column: {
 		                depth: 25
 		            }
-		        }/*,
-		        xAxis: {
-		            min: 1
-		         }*/,
+		        },
 		        series: [{
 		            data: [],
 		            name: "Views"
@@ -217,56 +205,8 @@ function updateChart(_graph) {
 			//chart.xAxis[0].setCategories(_res);
 			//chart[0].xAxis[0].update(res, true);
 			
-			
-			
-			
 		} catch (e){
 			//alert("made a mistake")
 		}
 }	
 	
-	
-/*
-function updateChart1(data) {	
-	
-		var chart=$("#containerChAnalyticsGraph1").highcharts();
-				
-		var integerArray = [ JSON.parse(data).yAxis ];
-		
-		var str = JSON.parse(data).yAxis.toString();
-		var res = str.split(",");
-		//alert("res1: "+res)
-		
-		//alert("iArray1: "+integerArray);
-		
-		for( var i = 0; i < res.length; i++ ) {
-			res[i] = parseInt( res[i], 10 );
-		}
-						
-		//alert(res);
-		//http://jsfiddle.net/4tuvC/
-		//chart.xAxis[0].setCategories(data[0]);
-		//chart[0].xAxis[0].update(data["xAxis"], true);
-		
-		chart.series[0].setData( res ,true);
-		
-		////////////////////////////////////////////////////////
-		//plot labels
-		////////////////////////////////////////////////////////
-		var stringArray = [ JSON.parse(data).xAxis ];
-		
-		str = JSON.parse(data).xAxis.toString();
-		res = str.split(",");
-		
-		var str1 = JSON.parse(data).yAxis.toString();
-		var res1 = str.split(",");
-		
-		/*
-		alert("res1: "+res)
-		
-		
-		//http://jsfiddle.net/4tuvC//*
-		//chart.xAxis[0].setCategories(res1);
-		//chart[0].xAxis[0].update(res, true);
-
-//}*/	
