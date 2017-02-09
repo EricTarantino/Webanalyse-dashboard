@@ -1,82 +1,81 @@
 /*eslint-env node*/
-var bcrypt = require('bcrypt')
+
+//Beziehe ein jwt objekt um sessions zu autorisieren.
 var jwt    = require('jwt-simple')
-//var User   = require('../models/user.server.model.js')
+
+//Beziehe mongoose zur Verwendung des mongoose Datenbank Connectors.
+var mongoose = require( 'mongoose' );
+
+//Beziehe das client secret um sessions zu autorisieren.
 var config = require('../../config/config.js')
-var mongoose = require( 'mongoose' ),  
-    User = mongoose.model('User'),
-    Graph = mongoose.model('Graph');
+
+//Das Benutzer model wird bereit gestellt. 
+//Wird benötigt um ein neues Dashbaord in der User Variable zu speichern.
+var User = mongoose.model('User');
+
+//Das Graph model wird bereit gestellt. 
+//Dieses wird benötigt um alle Graphen zu einem Dashboard mittels Get request aus der Datenbank zu erhalten.
+//Wird auch benötigt um Graphen zu löschen mittels delete request. 
+var Graph = mongoose.model('Graph');
     
-//TODO Also save in the graph database
+//Exportiert die get request Funktion für ein Dashboard.
 exports.get = function (req, res, next) {
+  //Prüft ob die notwendigen header vorliegen.
   if (!req.headers['x-auth']) {
     return res.status(401).send("authorization failed");
   }
-  
-  /*  	  var req = {
- 	  	method: 'GET',
- 		url: 'https://prototype-84629.mybluemix.net/api/graphdata',
- 		headers: {'useremail':useremail, 'dashboard':dashboard, 'graphName': selectedName  }
-  	  }
-	  // aus analytics.svc ////////////////////
-	  
-      //return the plot data
-      $http( req ).
-  */
-  
+  //Bezieht das Dashboard aus dem Dashboard-Name-Parameter  .
   var dashboard = req.get('dashboardname');
-  
+  //Bezieht das Objekt zur kodierung der useremail zwecks Suche in der Datenbank.
   var auth = jwt.decode(req.headers['x-auth'], config.secret);
-  
-  //find all graphs for the given dashboard name
+  //Finde alle Graphen für einen Key - Benutzeremail und Dashboard Kombination.
   Graph.find({useremail: auth.useremail, dashboard: dashboard}, function (err, dashboard) {
     if (err) {
       console.log(err);
-      return next(err);
+      return res.status(401).send("Can not find graph in dashboard server");
       }
-	 console.log(dashboard)	
-     //return array of graphs which are in the given dashboard
+	 console.log(dashboard);
+     //Beantworte das request mit einer json, welche die Graphen enthält.
      res.json(dashboard);
   });
 };
 
 //TODO make model for dashboard, save dashboards name, graphname string array and kategorie and useremail string array
-//every dashboard gets saved in the dashboard database
 
-
+//Jedes dashboard wird in der Benutzer Datenbank gespeichert. Ein Benutzer hat Dashboards.
 exports.post =  function (req, res) {
-	
-	var userNewDBName =  req.body.selectedNameDB;
-	
+	//Prüfe ob die notwendigen header vorliegen.
 	if (!req.headers['x-auth']) {
     	return res.status(401).send("Authorzation failed");
-  	}
-  	
-  	console.log("post dashboard")
+ 	}
+	//Aus dem request wird der gewählte Dashboard Name gelesen.
+	var userNewDBName =  req.body.selectedNameDB;
+  	//console.log("post dashboard");
+  	//Dekodiere die session information im header.
   	var auth = jwt.decode(req.headers['x-auth'], config.secret);
-  	User.findOne({useremail: auth.useremail}, function (err, user) {
-    	console.log("found user: "+user)
+  	//Finde den user mit der kodierten useremail. 
+  	User.findOne({useremail: auth.useremail}, function (err, user) {    	
+    	//Wenn kein user gefunden wurde, dann sende 402 zurück.
     	if (err) {
       		console.log("user server controller"+err);
       		return res.sendStatus(402);
       	}
-      	console.log("new db for : "+userNewDBName);
-      	
-      	//insert new dashboard in List
+      	//Greife auf die userdashboards zu.
       	var userdashboards = user.userdashboards;
+      	//Füge das neue dashboards zu dem userdashboard array hinzu.
       	userdashboards.push(userNewDBName);
-      	
+      	//Speichere für den user das userdashbaord.
       	user.userdashboards = userdashboards;
-
+		//Speichere den user in der datenbank ab.
 		user.save(function (err, user ) {
     		if (err){
     			console.log("user server controller"+err);
       			return res.sendStatus(406);
     		}
-    		console.log("der user json:" + user);
-     		console.log("my username: " + user.username);
-     		console.log("my useremail: " + user.useremail);
-     		console.log("my dashboards: " + user.userdashboards );
+    		//console.log("der user json:" + user);
+     		//console.log("my username: " + user.username);
+     		//console.log("my useremail: " + user.useremail);
+     		//console.log("my dashboards: " + user.userdashboards );
      		
      		/*Response status 201 means content was created specified in 
      		https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
@@ -84,70 +83,67 @@ exports.post =  function (req, res) {
      		be requested in a get resonse. The result is an updated user,
      		but the local user dashboard is already updated clientside.
      		The clientside takes care of an error response.*/
-    		return res.status(201)    
-
-	     	//var jsonResult = JSON.parse(JSON.stringify(user));
-     		//res.status(201).json(jsonResult);     
+     		
+     		//Send back the success status.
+    		return res.status(201);       
   		})
   	});
 }
 
 //TODO also delete all graphs 
 exports.delete =  function (req, res) {
-	
 	//console.log("query param: "+req.query._db)
-	
+	//Prüfe ob die notwendigen header vorliegen.
 	if (!req.headers['x-auth']) {
     	return res.status(401).send('Authorization missing');
   	}
-  	
   	/*id is the name of the dashboard that should be deleted,
   	 *userdashboards in the user database need modification
      *(could this be done with put User (REST Application)?),
 	 *and all graphs that belong to this dashboard need to be deleted
-	 *from the graph database */
+	 *from the graph database*/
+	//Dekodiere die session information im header.
     var auth = jwt.decode(req.headers['x-auth'], config.secret);
-    
-    //find the user document 
+    //Finde den user mit der kodierten useremail. 
     User.findOne({useremail: auth.useremail}, function (err, user) {
-	    	
+	   //Wenn kein user gefunden wurde, dann sende 402 zurück. 	
 	   if (err) {
 	   		console.log("user server controller"+err);
-	   		return res.status(401).send('Authorization failed');
+	   		return res.status(402).send('Authorization failed');
 	   	}
-    	
-    	//read out the query, name of the dashboard that should be deleted
+    	//Lese die information aus der Query, welches Dashboard gelöscht werden soll.
+    	//An dieser Stelle wird eine Query verwendet, und kein json aus dem body des
+    	//request gelesen, weil es sich um ein delete request handelt. 
 	    var id = req.query._db;
-	  	
-	  	//delete all graphs that belong to the dashboard
+	  	//Lösche alle Graphen die zu dem Dashboard gehören, das geschieht 
+	  	//mit zwei von drei key parametern: useremail und dashboard name.
 	  	Graph.remove({ dashboard: id }, function (err) {
-	  		
+	  		//wenn ein Fehler beim Löschen vorkommt, sende status 401 zurück.
 	  		if (err){
 	  			res.status(401).send('Delete graphs for dashboard failed');
-	  		}// removed!		
-	  		
-	      	console.log("delete id: " + id); 	      	
-	      	      	  		
-	  		//if all graphs could be deleted, delete the dashboard from dashboard array
+	  		}
+	      	console.log("delete id: " + id); 
+	  		//Nachdem alle Graphen mit der Dashboard Zugehörigkeit gelöscht wurden, lösche das dashboard aus 
+	  		//dem Dashboard array des users. Dies ist das eigentliche Löschen des Dashboards.
 	  		var index = user.userdashboards.indexOf(id)
 	  		if (index >= 0) {
 	  			user.userdashboards.splice( index, 1 );
 	  		}
-	  		
-	  		//tell mongoose that the array has changed
+	  		//Benachrichtige mongoose über die Veränderung bei dem user.
 	  		user.markModified("userdashboards");
-		  		
+			
 	  		/*long version without mark modified but with a helper variable: 
 	  		var arr = user.userdashboards; var index = arr.indexOf(id); if (index >= 0) {arr.splice( index, 1 )};user.userdashboards = arr;*/	
 		  	
-		  	//save changes to the user, especially save the change of the dashboard list
+		  	//Speichere den user wieder in der Datenbank mit den Veränderungen.
 			user.save(function ( err, user ) {
+				//Wenn das Speichern des updates an dem Benutzer fehlschlägt
 	    		if (err){
 	    			console.log( "user server controller" + err );
 		   			return res.status(401).send("Updating list of dashboards failed");
 		   		}
-		   		console.log( "der user json:" + user );
-		   		console.log( "my dashboards : " + user.userdashboards );
+		   		//console.log( "der user json:" + user );
+		   		//console.log( "my dashboards : " + user.userdashboards );
 		     		
 		   		/*var jsonResult = JSON.parse( JSON.stringify( user ) )*/
 		   		
@@ -318,6 +314,8 @@ exports.delete = function(req, res, next) {
     }
   })
 };
+//console.log("found user: "+user)
+//console.log("new db for : "+userNewDBName);
 */
 
 

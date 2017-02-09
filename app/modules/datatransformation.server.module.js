@@ -1,51 +1,42 @@
 /*eslint-env node*/
-var bcrypt = require('bcrypt')
-var jwt    = require('jwt-simple')
-//var Webtrends   = require('../models/webtrends.server.model.js')
-//var Dummydata   = require('../models/dummydata.server.model.js')
+//var bcrypt = require('bcrypt')
+//var jwt    = require('jwt-simple')
 
 
-// TODO: include streaming
+//var mongoose = require( 'mongoose' );  
+//var Webtrends = mongoose.model('Webtrends');
+//var Dummydata  = mongoose.model('Dummydata');  
 
-var mongoose = require( 'mongoose' ),  
-    Webtrends = mongoose.model('Webtrends'),
-	Dummydata  = mongoose.model('Dummydata');  
+//var config = require('../../config/config.js');
+//var request = require('request');
+//const https = require('https');
+//var extend = require('util')._extend
+//var jsonQuery = require('json-query');
 
-var config = require('../../config/config.js')
-var request = require('request')
-const https = require('https')
-var extend = require('util')._extend
-var jsonQuery = require('json-query')
 
-//this was created in a singleton on app start
-var mongoDB = require('../../config/mongoDB.js')
+//Beziehe die Mongo Datenbank direkt um präzise querries zu stellen.
+var mongoDB = require('../../config/mongoDB.js');
 
+//Transformation der Daten von Webtrends
 exports.transformDatas = function(graph, responseObject){
 	
-	//////  access database
-	var db = mongoDB.getMongoDB()
+	//Beziehe den Mongo Datenbank Connector.  
+	var db = mongoDB.getMongoDB();
 		
-	//////  obsolete 1 																	
-	//////	code was here (see bottom). Option to test database and to drop databases  	  	
-  	//////	collection.drop()  	
-  	//////	http://stackoverflow.com/questions/10885044/mongodb-how-to-query-for-a-nested-item-inside-a-collection
-  	//////	var profileIDArray = []  	  	
-
+	//Stelle die Verbindung zur Compose Database her.
   	var  collection = db.collection('amigo');  	
   	
-  	//////	x-Axis and y-Axis results  		
+  	//Stelle Variablen breit um Graphdaten zu speichern.  		
   	var _indexValue = []; 
   	var _xAxis 		= []; 
     var _yAxis 		= [];
   	
-  	//to log the result => Select fields, use fields to find value and acces doc by name
+  	//Finde alle Einträge für die eine Profile ID existiert
   	collection.find( {'definition.profileID':{$exists:true}}, {'_id':0} ).toArray(function(err, docs) {
   		 
-  		//var profileID
-  		 
-  		//retrieve the values from the file that we got from the database 
+  		//Erhalte die Werte von der Datenbank die gesucht sind, dazu wird die Profile ID benötigt.
     	for(var i = 0; i < docs.length; i++){
-    		//get profile ID
+    		//Lese die profile id aus.
     		try{
     			var profileID = docs[i].definition['profileID'];
     			_indexValue.push(profileID);
@@ -54,23 +45,24 @@ exports.transformDatas = function(graph, responseObject){
     			_indexValue.push("");
     		}
     		
-    		//get profile Name
+    		//Lese zu einer Profile ID den Profilnamen aus, dieser wird im Frontend angezeigt. 
     		try{
     			var profileName = docs[i].definition['profileName'];
     			_xAxis.push(profileName);
     		} catch (e){
+    			//Falls der Wert nicht lesbar ist, schreibe eine Leerstelle als x-Wert.
     			console.log(e);
     			_xAxis.push("");
     		}
     		
-    		//try to get page views if they are defined
+    		//Lese zu einem profil namen die Pageviews aus (oder eine andere beliebige Metrik).
     		try{
     			var yValue = docs[i].data[0].SubRows[profileID].measures['PageViews'];
-    			//console.log("PageViews-xy, i " + i + ", " + yValue);
+    			//Füge die ausgelesene Metrik als y-Achsen Wert ein.
     			_yAxis.push(yValue)
     		} catch (e){
     			console.log("No Data Available: Error");
-    			//_yAxis.push("");
+    			//Falls kein y-Wert lesbar ist, entferne den x-WErt an dieser Stelle. 
     			_xAxis.pop();
     		}
     		
@@ -78,71 +70,44 @@ exports.transformDatas = function(graph, responseObject){
     			console.log( _xAxis.length );
 				console.log( _yAxis.length );	
 				
-      			//console.log("plotdata request für: " + graph);
+      			//Speichere die ausgelesenen Werte im Graphobjekt, dass zurück geschickt wird. 
       			graph.xplot= _xAxis;
 				graph.yplot= _yAxis; 	
 				
+				//Speichere den Graphen in der Graphdatenbank ab.
 				graph.save()
 				
 				console.log(graph);
-		
+				
+				//Transformiere den Graphen, in ein JSON Objekt, dass zum lient geschickt wird. 
 				var jsonResult = JSON.parse(JSON.stringify(graph));
 				console.log( JSON.stringify(jsonResult ));	
 				
-				//the data from webtrends is emptied, we have the graph saved 
-				//with the plot data in the graph collection with the graph object
+				//Leere die Webtrendsdatenbank (Dieser Schritt fällt weg, unter Verwendung von predictive analytics).
 				collection.drop();
 				
-				//We are sending a json object
+				//Schicke ein JSON Objekt an den Client zurück mit dem Graphen. 
 				return responseObject.json(jsonResult).status(205);
     		}
     	} 	
 	});	
 }
 
-//gets a user right from the user choice, gets a response object from the request 
-//and gets the collection where the data is saved
+//Transformation der Daten für ein Management Dashboard
 exports.transformManagement = function(mmdbAccess, responseObject, collection){
 	
-	//////  access database
-	//var db = mongoDB.getMongoDB()
-		
-	//////  obsolete 1 																	
-	//////	code was here (see bottom). Option to test database and to drop databases  	  	
-  	//////	collection.drop()  	
-  	//////	http://stackoverflow.com/questions/10885044/mongodb-how-to-query-for-a-nested-item-inside-a-collection
-  	//////	var profileIDArray = []  	  	
-
-  	//var  collection = db.collection(collectionName);
- 
- 	//TODO Transform data to aggregated data and return in datatransformation, fetchManagementData
-  	//////	x-Axis and y-Axis results  		
-  	var _indexValue = [];
-  	var _xAxis 		= []; 
-    var _yAxis 		= [];
+	//Deklariere eine Variable, in der der Profilname gespeichert wird.     
+    var profileID;
     
-    var profileID;	
+    //Deklariere Variablen der anzuzeigenden Metriken bereit.
 	var PageViews=0;
 	var Visits=0;
   	var Visitors=0;
   	
-  	/*
-  	if(mmdbAccess === "DIY"){
-		//to log the result => Select fields, use fields to find value and acces doc by name
-	  	console.log("Access DIY")
-	  	collection.find( {'definition.profileName' : "DIY - in total"}, {'_id':0} ).toArray(function(err, doc){
-	  		console.log(JSON.stringify(doc));
-	  		
-	  		profileID = doc.definition['profileID'];	
-	  		
-	  		PageViews = doc.data[0].SubRows[profileID].measures['PageViews'];
-	  		Visits = doc.data[0].SubRows[profileID].measures['Visits'];
-	  		BounceRate = doc.data[0].SubRows[profileID].measures['BounceRate'];
-	  	})
-	}
-	*/
+ 	//Deklariere eine Variable, welche die query enthält, diese ist von des Clientrequests abhängig. 
 	var query;
 	
+	//Initialisiere die query an Webtrends entsprechend des Clientrequests, berücksichtige das gewählte Profil. 
 	if(mmdbAccess === "DIY"){
 		console.log("Access DIY")
 		query =  {"definition.profileName" : "DIY - in total"};
@@ -158,12 +123,15 @@ exports.transformManagement = function(mmdbAccess, responseObject, collection){
 		query =  {"definition.profileName" : "LG Bosch Garden - in total"};
 	}
 		
+	
 	var test = true;
 	
 	if(test){
+		//Finde die Daten entsprechend der initialisierten query.  
 		collection.find( query, {'_id':0} ).toArray(function(err, _doc){
-			console.log("_doc length in real query is " + _doc.length);
 			
+			//Loggen in der Serverconsole
+			console.log("_doc length in real query is " + _doc.length);			
 			try{
 				console.log(JSON.stringify(_doc));
 			}catch(e){
@@ -185,16 +153,18 @@ exports.transformManagement = function(mmdbAccess, responseObject, collection){
 				console.log("can not log doc[0], try1")
 			}
 	  		
+	  		//Initialisiere eine Variable mit dem Ergebnis der query. 
 	  		var doc = _doc[0];
 	  		
-	  		//read out the profile ID to find other metrics
+	  		//Lese die id aus, um die Metriken auslesen zu können.
+	  		//Dies hängt mit der Datenstruktur zusammen, die von Webtrends bereit gestellt wird.
 	  		try{
 	  			profileID = doc.definition['profileID'];
 	  		}catch (e){
 	  			console.log("doc.definition.profileID is probably undefined")	
 	  		}
 	  		
-	  		//get the metric values, the profile ID is necessary to get access
+	  		//Lese die Metrik Werte aus und speichere sie in der Variable. 
 	  		try{	  			
 	  			PageViews = doc.data[0].SubRows[profileID].measures['PageViews'];
 	  			Visits = doc.data[0].SubRows[profileID].measures['Visits'];
@@ -206,6 +176,7 @@ exports.transformManagement = function(mmdbAccess, responseObject, collection){
 	  		}
 	  		
 	  		try{
+	  			//Erstelle ein JSON, welches zurück geschickt wird zum Client mit den Werten. 
 				var	managementDB = JSON.stringify({"PageViews" : PageViews, "Visits": Visits, "Visitors": Visitors});
 			}catch(e){
 				console.log("error writing the managementDB")
@@ -213,6 +184,7 @@ exports.transformManagement = function(mmdbAccess, responseObject, collection){
 			
 			console.log(JSON.stringify(managementDB));
 				
+			//Schicke das Objekt zurük. 
 			return responseObject.status(201).json(managementDB);
 	  	})	  
 	}

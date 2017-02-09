@@ -1,32 +1,32 @@
 /*eslint-env node*/
+
+//Bezieht den controller der register.ejs datei.
 var register = require('../controllers/register.server.controller.js');
 
-var index = require('../controllers/index.server.controller.js');
+//Bezieht das express packet für das routing.
 var express = require('express');
+
+//Bezieht die Methode express Router für das routing.
 var router  = express.Router();
-var bodyParser = require('body-parser')
 
-//module.exports = function(app) {
-router.use(require('../../config/auth.js'))
-router.use(bodyParser.json())
+//Bezieht den body parser um mit req.body json files auszulesen.
+var bodyParser = require('body-parser');
 
-router.use('/api', require('./api/index.api.server.routes.js'))
+//Bezieht auth.js für die dekodierung von session headern.
+router.use(require('../../config/auth.js'));
 
-router.use('/', require('./static.server.routes.js'))
+//Aktiviert den body parser um mit req.body json files auszulesen.
+router.use(bodyParser.json());
 
-//for register, we render the index page but with the register route, there is no link to get to this route for the user
-router.use('/register', index.render)
-	
-/*old code
-    //list all the possible routes, in order to render index
-    app.get('/', index.render);
-    //app.get('/second', index.render);
-    //app.get('#/second', index.render);
-    //app.get('/third', index.render);
-    //app.get('#/third', index.render);
-    //app.get('/signup', index.render);
-    */
-//};
+//Legt fest, dass die url /api durch das routing in index.server.routes.js, (index Tabelle für das Routing über API) behandelt wird.
+router.use('/api', require('./api/index.api.server.routes.js'));
 
+//Legt fest, dass die url "/" duch das routing in static.server.routes.js behandelt wird.
+router.use('/', require('./static.server.routes.js'));
 
-module.exports = router	
+//Legt fest, dass die url "/register" durch den register controller behandelt wird (rendert register.ejs).
+router.use('/register', register.render);
+
+//Exportiert router
+module.exports = router;
+

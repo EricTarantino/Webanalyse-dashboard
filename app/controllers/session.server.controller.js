@@ -1,54 +1,49 @@
 /*eslint-env node*/
-var bcrypt = require('bcrypt')
-var jwt    = require('jwt-simple')
-var config = require('../../config/config.js')
-//var User   = require('../models/user.server.model.js')
 
-var mongoose = require( 'mongoose' ),  
-    User = mongoose.model('User');
+//Erstellt für die aktuelle Session eines Benutzers einen Token aus dem Passwort und der Benutzeremail. 
 
-
-
-//one username may be given one time, the database will only find the first user with the name for password comparison
-//so every username should be unique
-
+//Bezieht bcrypt zum Vergleich des gespeicherten kodierten Passworts und des angegebenen Passworts.
+var bcrypt = require('bcrypt');
+//Bezieht eine jwt-simple Instanz zur Verwendung von jwt Token in der Session.
+var jwt = require('jwt-simple');
+//Bezieht eine config Instanz um das Secret zur Erstellung von Sessions zu erhalten. 
+var config = require('../../config/config.js');
+//Beziehe mongoose zur Verwendung des mongoose Datenbank Connectors.
+var mongoose = require( 'mongoose' );
+//Das Benutzer model wird bereit gestellt. Wird benötigt um den User zu finden und mittels useremail (Login Formular) 
+//und Session Secret ein token zu erstellen. Wird benötigt um ein neues Dashboard in der User Variable zu speichern.
+var User = mongoose.model('User');
+//One username may be given one time, the database will only find the first user with the name for password comparison.
+//So every username should be unique.
 exports.post = function (req, res, next) {
-/*
-	mongoose.connection.collections['18_15_pm'].drop( function(err) {
-    console.log('collection dropped');});
-	mongoose.connection.collections['amigo'].drop( function(err) {
-    console.log('collection dropped');});
-	mongoose.connection.collections['benutzer'].drop( function(err) {
-    console.log('collection dropped');});
-	mongoose.connection.collections['graph'].drop( function(err) {
-    console.log('collection dropped');});
-	mongoose.connection.collections['devTestOutput'].drop( function(err) {
-    console.log('collection dropped');});
-	mongoose.connection.collections['test'].drop( function(err) {
-    console.log('collection dropped');});
-	mongoose.connection.collections['users'].drop( function(err) {
-    console.log('collection dropped');});
-	mongoose.connection.collections['webtrends'].drop( function(err) {
-    console.log('collection dropped');
-});
-*/
-
-  //sends a jwt token to the client
-  var useremail = req.body.useremail;
+  //Auslesen kann über req.body.parameter geschehen weil der json body parser zuvor verwendet wurde. 
+  //Liest die von Benutzer angegebene Email aus.
+  var useremail = req.body.useremail;  
+  //Liest das vom Benutzer angegebene Passwort aus.
   var password = req.body.password;
-  console.log("Login: useremail " + useremail+ ", password " + password)
+  console.log("Login: useremail "+useremail+", password "+password);
+  //Lese einen Benutzer aus um das angegebene Passwort mit dem gespeicherten Passwort zur useremail zu vergleichen.
   User.findOne({useremail: useremail})
+  //Wähle das Passwort Parameter aus dem user Eintrag aus. 
   .select('password')
+  //Führe eine Funktion aus um das Passwort zu vergleichen und einen Session Token zum Client zu schicken.
   .exec(function (err, user) {
-    if (err) { return next(err) }
-    if (!user) { return res.send("user nicht vorhanden") }
+  	//Ein grundsätzlicher Fehler.
+    if (err) { return res.send("Fehler beim Einloggen ") }
+    //Ein Fehler bei der Abfrage der useremail
+    if (!user) { return res.send("useremail nicht vorhanden") }
+    //Vergleiche das Passwort aus dem request body und das Benutzer Passwort. 
     bcrypt.compare(req.body.password, user.password, function (err, valid) {
-      if (err) { return next(err) }
-      if (!valid) { return res.send("password falsch") }
-      var token = jwt.encode({useremail: useremail}, config.secret)
-      return res.send(token)
-    })
-  })
+		//Ein Fehler beim Abgleich des Passworts ist aufgetreten, antworte mit einem Fehlerstatus.
+		if (err) { return res.send("Fehler beim Passwort Vergleich") }
+		//Das Passwort ist falsch, antworte mit einem Fehlerstatus.
+		if (!valid) { return res.send("password falsch") }
+		//Das Passwort ist korrekt, antworte mit dem Session Token, dieser wird aus der useremail gewonnen.
+		var token = jwt.encode({useremail: useremail}, config.secret);
+		//Sende den Token zurück.
+		return res.send(token);
+    });
+  });
 }
 
  	 		

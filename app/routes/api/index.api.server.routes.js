@@ -2,7 +2,6 @@
 var router = require('express').Router()
 
 //these are all defined "/api" routes 
-//router.use('/post', require('./posts.server.routes.js'))
 
 router.use('/login', require('./sessions.server.routes.js'))
 

@@ -17,12 +17,12 @@
 	<!--<p>Aktuelles Dashboard: {{currentDB}}</p>-->
 	<p>Aktuelles Dashboard: {{CDB}}</p>
 
-	<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">		
-		<!--graphs-->			
-		<div ng-repeat="x in mygraphs track by $index" layout-margin>						
+	<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+		<!--graphs-->
+		<div ng-repeat="x in mygraphs track by $index" layout-margin>
 			<!--<div class="slide-animate" ng-include="./graphs/3dGraph.ejs"></div>-->
 			<!--Die Id lautet:  {{x.dashboard}}_{{x.name}}. Buttons zum schließen, vergrößern, verkleinern, zoomen-->
-			<!--<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">-->	
+			<!--<md-content class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">-->
 			
 			<!--graph-->
 			<md-card style:"padding:8px">
@@ -39,8 +39,8 @@
 				<div style="height:400px" id="{{x.dashboard}}_{{x.name}}_loader" layout="row" layout-align="center center">
 					<div class="loader">
 					</div>
-				</div>	
-			</md-card>						
+				</div>
+			</md-card>
 						
 			<md-content style = "background-color: #ffffff">
 				<div layout-margin id="{{x.dashboard}}_{{x.name}}_datatable" style="visibility:hidden">
@@ -50,7 +50,7 @@
 							<md-input-container style="margin:15px;">
 								<label>Suchfilter fixed data table</label>
 								<input type="text" ng-model="filterTable">
-							</md-input-container>		
+							</md-input-container>
 							<div ng-hide="true">
 								{{(filteredItems = (datatable | filter: filterTable))}}
 							</div>

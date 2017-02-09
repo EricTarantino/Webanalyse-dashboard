@@ -1,5 +1,6 @@
 /* eslint-env node*/
 
+//exportiert eine Funktion zum rendern der register Datei, diese gibt das gerenderte register.ejs file zurück
 exports.render = function(req, res) {
   /*
   if (req.session.lastVisit) {
@@ -8,7 +9,7 @@ exports.render = function(req, res) {
   
   req.session.lastVisit = new Date();
   */
-  res.render('register', {
+  res.render('index', {
     title: 'Bosch Analytics',
   });
 };

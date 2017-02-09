@@ -35,8 +35,7 @@ mongoose.connection.on('open', function (err) {
    	});
 });
 
-var MongoClient = require('mongodb').MongoClient
-  , assert = require('assert');
+var MongoClient = require('mongodb').MongoClient, assert = require('assert');
 
 
 mongoose.Promise = global.Promise;
@@ -45,9 +44,9 @@ mongoose.connect(config.db, options);
 
 
 // BRING IN YOUR SCHEMAS & MODELS // For example 
-require('../app/models/dummydata.server.model.js');  
+//require('../app/models/dummydata.server.model.js');  
 require('../app/models/graph.server.model.js');  
-require('../app/models/post.server.model.js');  
+//require('../app/models/post.server.model.js');  
 require('../app/models/user.server.model.js');  
 require('../app/models/webtrends.server.model.js'); 
 

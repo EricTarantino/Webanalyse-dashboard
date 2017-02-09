@@ -7,15 +7,20 @@
  * Cheers!
  */
 
+//fs zum Lesen des Filesystems, an späterer Stelle um das Clientsecret zu lesen
 var fs = require('fs');
+//Simple streaming readline module for NodeJS. Reads a file and buffers new lines emitting a line event for each line
 var readline = require('readline');
+//Google's officially supported Node.js client library for using Google APIs. Support for authorization and authentication with OAuth 2.0, API Keys and JWT (Service Tokens) is included
 var google = require('googleapis');
+//Create and load persistent Google OAuth API authentication tokens on the command-line
 var googleAuth = require('google-auth-library');
 
+/*
+var mongoose = require('mongoose');
 var bcrypt = require('bcrypt'); // require('bcrypt')
 var jwt = require('jwt-simple');
-var mongoose = require('mongoose'),
-	Webtrends = mongoose.model('Webtrends'),
+var	Webtrends = mongoose.model('Webtrends'),
 	Webtrends = mongoose.model('Dummydata');
 var streamToMongoDB = require("stream-to-mongo-db").streamToMongoDB;
 var JSONStream = require("JSONStream");
@@ -24,23 +29,23 @@ var request = require('request');
 const https = require('https');
 var extend = require('util')._extend;
 var dataTranformation = require('../modules/datatransformation.server.module.js');
+*/
 
 //this was created in a singleton on app start, directly access mongo
 var mongoDB = require('../../config/mongoDB.js')
-
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/drive-nodejs-quickstart.json
 var SCOPES = [
 	'https://www.googleapis.com/auth/webmasters'
 ];
+
 // var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
 // 	process.env.USERPROFILE) + '/.credentials/';
 // var TOKEN_PATH = TOKEN_DIR + 'drive-nodejs-quickstart.json';
 
 // store the ~/.credentials/drive-nodejs-quickstart.json locally into this folder
 var TOKEN_PATH = './app/controllers/webmasters-nodejs-auth.json';
-
 
 /* 
  *
@@ -72,17 +77,23 @@ exports.getGoogSearchConData = function(graph, responseObject) {
  * @param {function} callback The callback to call with the authorized client.
  */
 function authorize(credentials, callback, graph, responseObject) {
+	//retrieve client secret
 	var clientSecret = credentials.installed.client_secret;
+	//retrieve client id
 	var clientId = credentials.installed.client_id;
+	//retrieve redirect url
 	var redirectUrl = credentials.installed.redirect_uris[0];
+	//retrieve a google authentification object
 	var auth = new googleAuth();
+	//retrieve oauth2Client
 	var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
-
 	// Check if we have previously stored a token.
 	fs.readFile(TOKEN_PATH, function(err, token) {
 		if (err) {
+			//get a new token if there is now stored token, use the callback function and pass it to getNewToken
 			getNewToken(oauth2Client, callback, graph, responseObject);
 		} else {
+			//use old token if there is a stored token, call the callback function directly with the arguments
 			oauth2Client.credentials = JSON.parse(token);
 			callback(oauth2Client, null, graph, responseObject);
 		}
@@ -98,7 +109,9 @@ function authorize(credentials, callback, graph, responseObject) {
  *     client.
  */
 
+//Function to get a new token, if th former token is no longer in use
 function getNewToken(oauth2Client, callback, graph, responseObject) {
+	//generate the authentification url, this url is visited to authorize url
 	var authUrl = oauth2Client.generateAuthUrl({
 		access_type: 'offline',
 		scope: SCOPES
@@ -108,6 +121,7 @@ function getNewToken(oauth2Client, callback, graph, responseObject) {
 		input: process.stdin,
 		output: process.stdout
 	});
+	//Stores the code of the token in a file, asves to TOKEN_DIR, specific directory
 	rl.question('Enter the code from that page here: ', function(code) {
 		rl.close();
 		oauth2Client.getToken(code, function(err, token) {
@@ -141,7 +155,7 @@ function storeToken(token) {
 
 
 /**
- * Lists sites.
+ * Lists sites. Listst the pages in the google search console account
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
@@ -162,7 +176,9 @@ function listSites(auth) {
 
 
 /**
- * Get sites search query data.
+ * Get sites search query data. Connector to the search console data. 
+ * This should use the parameters instead of static values.
+ * Then sends the data back to the client. 
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */

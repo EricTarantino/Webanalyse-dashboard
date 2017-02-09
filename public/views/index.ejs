@@ -16,42 +16,35 @@
         <meta name="description" content="Bosh MT Dashboard">
         <meta name="viewport" content="width=device-width, initial-scale=1">    
                  
-        <base href="/"/>         
+        <base href="/"/>
   
         <!-- libraries -->
         <script src="../lib/retina/retina.min.js"></script>      
         <script src="../lib/jquery/jquery-3.1.0.min.js"></script>
         <script src="../lib/bootstrap/bootstrap.min.js"></script>
         <script src="../lib/oboe/oboe-browser.js"></script>
-         
+        
 		<!-- styles -->
 		<link rel="stylesheet" href="../styles/style.css">        
         <link rel="stylesheet" href="../styles/panel.css">
         <link rel="stylesheet" href="../styles/navbar.css"> 
 		<link rel="stylesheet" href="../lib/simple-sidebar/simple-sidebar.css">		
 		<link rel="stylesheet" href="../lib/bootstrap/bootstrap.min.css">
-		<link rel="stylesheet" href="../lib/angular-material-icon/angular-material-icons.css">
-		
+		<link rel="stylesheet" href="../lib/angular-material-icon/angular-material-icons.css">		
 		<!-- library used for drag and drop functionality in the analytics dashboard -->
 		<link rel="stylesheet" href="../lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-   	 	
-   	 	<!-- MVC Angular Classes --><!--<script type="text/javascript" src="/lib/angular/angular.min.js"></script>--><!-- datepicker-->       
-		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment-with-locales.min.js"></script>-->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/md-data-table/1.8.0/md-data-table-style.css"/>
-		
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300, 400, 500, 700, 400italic">   	 	
+   	 	<!-- MVC Angular Classes --><!--<script type="text/javascript" src="/lib/angular/angular.min.js"></script>--><!-- datepicker-->   
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/md-data-table/1.8.0/md-data-table-style.css"/>		
 		<!-- styles for the datepicker -->
 		<!--<link rel="stylesheet" href="/lib/angular-bootstrap-datetimepicker/datetimepicker.css"/>-->
 	
-  </head>
+	</head>
   
-  <body ng-app="app" ng-controller="ApplicationCtrl as vm">
-    
+		<body ng-app="app" ng-controller="ApplicationCtrl as vm">
 
-
-
-<!-- wrapper class needed for the sidebar -->
-    <div id="wrapper" class="toggled"  ng-controller="SidebarCtrl" class="sidenavdemoBasicUsage">
+		<!-- wrapper class needed for the sidebar -->
+   	 	<div id="wrapper" class="toggled"  ng-controller="SidebarCtrl" class="sidenavdemoBasicUsage">
     
     		<!-- Sidebar takes 3 columns -->
         	<div id="sidebar-wrapper" class="sidebar">
@@ -110,7 +103,7 @@
         	
     		
 <!-- top navigation bar -->
-        	<nav ng-controller="RegisterCtrl as user">
+        	<nav><!-- ng-controller="RegisterCtrl as user"-->
         	
         		<ul class="topnav">
             		<div class="topnavleft" >
@@ -149,19 +142,15 @@
            		</ul> 
            	</nav>
 <!-- end top navigation bar -->			
-			
-			
 			<!-- this is used to insert the graph box at div with id #some-id -->
-			<!--<div id="some-id"></div>-->
-			
-			
+			<!--<div id="some-id"></div>-->	
 			
 			
 <!-- angular overlay, left sidebar menu -->
 			<md-sidenav ng-cloak class="md-sidenav-left" md-component-id="left" md-whiteframe="1" style="background-color:#000000">
+			
 				<div id="closeNgSidebar">
-					<img style="display:none" ng-click="close()" src="icon/closeicon.png" style="height:20px; margin-top:15px; margin-right:15px" alt="Close Logo">
-            	
+					<img style="display:none" ng-click="close()" src="icon/closeicon.png" style="height:20px; margin-top:15px; margin-right:15px" alt="Close Logo">        	
 					<div style="padding-top:98px"></div>
 				</div>
             	
@@ -202,8 +191,7 @@
 								
 							<md-icon ng-click="deleteDB(x)" md-svg-src="../icon/ic_highlight_off_black_24px.svg"></md-icon>							
 						</md-card-actions>
-					</md-card>										
-						
+					</md-card>								
 				</div><!-- /#analytics-controller -->
 			</md-sidenav>	
 				
@@ -300,63 +288,48 @@
 	<!--<script src="/lib/moment/moment.min.js"></script>
 	<script>
     	moment().format();
-	</script>	-->	
+	</script>-->	
 	
 	<!-- dates -->
-	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment-with-locales.min.js"></script>
-	-->
 	<!-- angular -->
 	<link rel="stylesheet" href="/lib/angular-material-icons/angular-material-icons.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/md-data-table/1.8.0/md-data-table-style.css"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.css">
 	
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-drag-and-drop-lists/1.4.0/angular-drag-and-drop-lists.min.js"></script>  
-        
-	<script type="text/javascript" src="/lib/angular-ui-router/angular-ui-router.min.js"></script>	
-	<script type="text/javascript" src="/lib/ct-ui-router-extras/ct-ui-router-extras.min.js"></script>		
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>	
 	
+	<script type="text/javascript" src="/lib/angular-ui-router/angular-ui-router.min.js"></script>	
+	<script type="text/javascript" src="/lib/ct-ui-router-extras/ct-ui-router-extras.min.js"></script>	
+		<!-- Angular additional libraries, these are necessary for the frontend with material and for mdDraggable-->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular-animate.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular-aria.min.js"></script>
 	<script type="text/javascript" src="/lib/angular-messages/angular-messages.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.js"></script>
-	
-	<!-- Order for angular https://github.com/iamisti/mdDataTable/issues/211 -->
-	
-	<!-- angualar-lodash -->
-	<script src="/lib/lodash/lodash.min.js"></script>
-	
-	<!-- angualar-material'mdDataTable' -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.js"></script>	
+	<script type="text/javascript" src="/lib/angular-material-icon/angular-material-icons.min.js"></script>
+	<script src="/lib/lodash/lodash.min.js"></script>	
 	<script type="text/javascript" src="/lib/angular-sanitize/angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="/ng/svg-assets-cache/svg-assets-cache.client.module.js"></script>
 	
+	<!-- Order for angular https://github.com/iamisti/mdDataTable/issues/211 -->	
+	<!-- angular logic -->	
+	<!-- angualar-lodash -->
+	<!-- angualar-material'mdDataTable' -->	
 	<!-- mdIcons for angualar-material'mdDataTable' 
 	<!-- https://github.com/iamisti/mdDataTable/issues/93-->
 	<!-- https://github.com/iamisti/mdDataTable/issues/86 -->
-	<script type="text/javascript" src="/lib/angular-material-icon/angular-material-icons.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-drag-and-drop-lists/1.4.0/angular-drag-and-drop-lists.min.js"></script>  
 	<script type="text/javascript" src="/lib/mdDataTable/md-data-table-templates.min.js"></script>
 	<script type="text/javascript"  src="/lib/mdDataTable/md-data-table.min.js"></script>
-
-	<!-- Angular additional libraries, these are necessary for the frontend with material -->
-	<!--<script type="text/javascript" src="/lib/angular-animate/angular-animate.min.js"></script>-->
-	<!--<script type="text/javascript" src="/lib/angular-aria/angular-aria.min.js"></script>	-->	
-	<!--<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js">-->
-	<!--<script src="http://ngmaterial.assets.s3.amazonaws.com/svg-assets-cache.js"></script>-->
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>-->				
-  
-	<!-- angular logic -->		
-	<script type="text/javascript" src="/ng/svg-assets-cache/svg-assets-cache.client.module.js"></script>	
 	
 	<script type="text/javascript" src="/ng/animate/animate.client.module.js"></script> 
-  	<script type="text/javascript" src="/ng/animate/animate.client.controller.js"></script>  
+  	<script type="text/javascript" src="/ng/animate/animate.client.controller.js"></script> 
   	
   	<script type="text/javascript" src="/ng/datepicker/datepicker.client.module.js"></script> 
   	<script type="text/javascript" src="/ng/datepicker/datepicker.client.controller.js"></script>
   	
-  	<!--
-  	<script type="text/javascript" src="/ng/graphdata/graphdata.client.module.js"></script>
+  	<!--<script type="text/javascript" src="/ng/graphdata/graphdata.client.module.js"></script>
 	<script type="text/javascript" src="/ng/graphdata/graphdata.client.controller.js"></script>		
 	<script type="text/javascript" src="/ng/graphdata/graphdata.svc.js"></script>-->
-	
 	<script type="text/javascript" src="/ng/graphpicker/graphpicker.client.module.js"></script>
 
 	<script type="text/javascript" src="/ng/management/management.client.module.js"></script>
@@ -365,10 +338,6 @@
 	
 	<script type="text/javascript" src="/ng/material/material.client.module.js"></script>
 	<script type="text/javascript" src="/ng/material/material.client.controller.js"></script>
-  	  
-	<script type="text/javascript" src="/ng/post/post.client.module.js"></script>
-	<script type="text/javascript" src="/ng/post/post.svc.js"></script>
-	<script type="text/javascript" src="/ng/post/post.client.controller.js"></script>
 		
 	<script type="text/javascript" src="/ng/register/register.client.module.js"></script>
 	<script type="text/javascript" src="/ng/register/register.svc.js"></script>
@@ -378,42 +347,45 @@
 	<script type="text/javascript" src="/ng/sidebar/sidebar.client.controller.js"></script>
 	
 	<script type="text/javascript" src="/ng/dragndrop/dragndrop.client.module.js"></script>	
-	<!--<script type="text/javascript" src="/ng/kategorie/kategorie.client.module.js"></script>-->
 	
 	<script type="text/javascript" src="/ng/analytics/analytics.client.module.js"></script>
 	<script type="text/javascript" src="/ng/analytics/analytics.svc.js"></script>
 	<script type="text/javascript" src="/ng/analytics/dashboard.svc.js"></script>
-	<script type="text/javascript" src="/ng/analytics/analytics.client.controller.js"></script>
+	<script type="text/javascript" src="/ng/analytics/analytics.client.controller.js"></script>	
 	
-	<!--
-	<script type="text/javascript" src="/ng/analytics/analytics.client.controller.js"></script>
-	<script type="text/javascript" src="/ng/analytics/analytics.svc.js"></script>
-	
-	<script type="text/javascript" src="/ng/newGraphDialog/newGraphDialog.client.module.js"></script>
-	<script type="text/javascript" src="/ng/newGraphDialog/newGraphDialog.svc.js"></script>
-	<script type="text/javascript" src="/ng/newGraphDialog/newGraphDialog.client.controller.js"></script>
-	-->
-	
-	<script type="text/javascript" src="/app.js"></script>	
-		
 	<!-- angular routes configurator -->	
-	<script type="text/javascript" src="/ng/ui.router/ui.router.client.config.js"></script>
-    
-    <!-- jquery scripts -->
-	<!-- box creation of a draggable angular.module('analytics', ['ngMaterial'])graph  box -->
-	<!--<script type="text/javascript" src="/scripts/draggable/draggable.js"></script>-->
+	<script type="text/javascript" src="/ng/ui.router/ui.router.client.config.js"></script>	
+
+	<!-- angular main module-->
+	<script type="text/javascript" src="/app.js"></script>
+	
 	<!-- for the menu toggle -->
   	<script type="text/javascript" src="/scripts/menutoggle/menutoggle.js"></script>
   	<!-- navbar responsive, this is with jquery for highest customization option -->
-  	<script type="text/javascript" src="/scripts/responsive/responsive.js"></script>
-  	
+  	<script type="text/javascript" src="/scripts/responsive/responsive.js"></script>  	
   	<!-- highcharts -->
   	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	<!--<script type="text/javascript" src="/scripts/setUpCharts/setUpCharts.js"></script>-->
-	
+	<!--<script type="text/javascript" src="/scripts/setUpCharts/setUpCharts.js"></script>-->	
 	<script type="text/javascript" src="/scripts/updateChart/updateChart.js"></script>
     
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+<!-- jquery scripts -->
+<!-- box creation of a draggable angular.module('analytics', ['ngMaterial'])graph  box -->
+<!-- script type="text/javascript" src="/scripts/draggable/draggable.js"></script>-->
+<!-- http://jsfiddle.net/zzxz3my9/61/ -->
+
+
+

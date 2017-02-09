@@ -15,8 +15,8 @@ var connectedMongoDB;
 
 // MongoDB Driver Connection Connection URL 
 var url = config.db;
-// Use connect method to connect to the Server 
 
+// Use connect method to connect to the Server 
 var ca = [fs.readFileSync(__dirname + "/servercert.crt")];
 
 var options = {
@@ -27,8 +27,6 @@ var options = {
         sslCA: ca,
     }
 };
-
-
 
 MongoClient.connect(url, options, function(err, db) {
   assert.equal(null, err);

@@ -1,23 +1,29 @@
 /*eslint-env node*/
+/*
 var bcrypt = require('bcrypt')
 var jwt    = require('jwt-simple')
-
-var mongoose = require( 'mongoose' ),  
-    Webtrends = mongoose.model('Webtrends'),
+var Webtrends = mongoose.model('Webtrends'),
     Webtrends = mongoose.model('Dummydata');
-    
-var streamToMongoDB = require("stream-to-mongo-db").streamToMongoDB;
-var JSONStream      = require("JSONStream");
-var mongoDB = require('../../config/mongoDB.js')
-
 var config = require('../../config/config.js')
 var request = require('request')
-const https = require('https')
 var extend = require('util')._extend
+*/  
+//require mongoose for the database connector
+var mongoose = require( 'mongoose' );    
+//stream webtrends data to the mongo database
+var streamToMongoDB = require("stream-to-mongo-db").streamToMongoDB;
+//Use JSON Stream to retreive attributes directly from the stream
+var JSONStream      = require("JSONStream");
+//require the direct mongo database connector, this is usefull for more
+//specific queries than with the standard connector
+var mongoDB = require('../../config/mongoDB.js')
+//require node https to make secure http requests
+const https = require('https')
+//retrieve the datatransformation module to continue with the data transformation
+//after fetching the data from webtrends
 var dataTranformation = require('../modules/datatransformation.server.module.js')
-
-// for google API data
-var GoogSearchCon = require('../controllers/GoogSearchCon.server.controller.js');
+//Module to deal with google api data 
+var GoogSearchCon = require('../modules/GoogSearchCon.server.controller.js');
 
 
 /* 

@@ -100,7 +100,8 @@ module.exports = app;
 	//	TODO Multilanguage
 	//  TODO Optional (Check nejo4 graphdatabase/ Hadoop)
 	// 	TODO Promises, Script Injection für die Bibliotheken, Security
-	//	TODO Streaming, Graphdatabase nejo4, Social Media, Hadoop
+	//	TODO Streaming, Graphdatabase nejo4, Social Media
+	//  TODO Hadoop
 	//
 	/////////////////////////////////////////////////////////////////////////////
 	//
