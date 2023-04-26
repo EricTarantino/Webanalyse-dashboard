@@ -1,5 +1,4 @@
 function setUpCharts(containerID) {
-    // Set up the chart
     const chart = new Highcharts.Chart({
         chart: {
             renderTo: containerID,
