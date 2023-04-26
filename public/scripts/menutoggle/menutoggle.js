@@ -1,38 +1,36 @@
-/*eslint-env jquery */    	
-$("#menu-toggle").click(function(e) {
-	//in the case of sufficient window size, toggle the sidenav. Else, the angular sidenav will be used
-	if( window.innerWidth > 1200){
-   		e.preventDefault();        	    
-   		//toggles the class attribute toggle by adding or removing it
-   		$("#wrapper").toggleClass("toggled");        	
-   		if (this.value=="Menu ausblenden") this.value="Menu einblenden";
-		else this.value="Menu ausblenden";    		  
-		var src = ($(this).attr('src') === "/icon/right_circle.png") ? "/icon/left_circle.png" : "/icon/right_circle.png";
-   		$(this).attr('src', src);  
-   	}
+/*eslint-env jquery */
+
+// Toggle side navigation
+$("#menu-toggle").click(function (e) {
+    if (window.innerWidth > 1200) {
+        e.preventDefault();
+
+        $("#wrapper").toggleClass("toggled");
+        this.value = this.value === "Menu ausblenden" ? "Menu einblenden" : "Menu ausblenden";
+
+        let src = $(this).attr('src') === "/icon/right_circle.png" ? "/icon/left_circle.png" : "/icon/right_circle.png";
+        $(this).attr('src', src);
+    }
 });
 
+// Close CSS side bar
 function closeCSSSideBar() {
-	//removes the class attribute toggled from the wrapper. The sidebar is then closed.
-	$("#wrapper").toggleClass("toggled", true); 
-	var src = "/icon/right_circle.png";
-   	$("#menu-toggle").attr('src', src); 
+    $("#wrapper").toggleClass("toggled", true);
+    let src = "/icon/right_circle.png";
+    $("#menu-toggle").attr('src', src);
 }
 
-//blend out menu if the user changes the browser size
-$( window ).resize(function() {
-	//in the case of sufficient window size, toggle the sidenav
-	if( window.innerWidth <= 1200){
-		//removes the class attribute toggled from the wrapper. The sidebar is then closed.
-		$("#wrapper").toggleClass("toggled", true); 
-		var src = "/icon/right_circle.png";
-   		$("#menu-toggle").attr('src', src);  
-   	//if the window size is too small, use the angular sidenav
-   	}  
-   	//if( window.innerWidth <= 1100){
-   	// 	$("#smallNavBlendInAtLogin").css( "display", "block");
-   	//}
-   	if( window.innerWidth > 1100){
-   	 	$("#smallNavBlendInAtLogin").css( "display", "none");
-   	}
+// Handle window resize events
+$(window).resize(function () {
+    if (window.innerWidth <= 1200) {
+        $("#wrapper").toggleClass("toggled", true);
+        let src = "/icon/right_circle.png";
+        $("#menu-toggle").attr('src', src);
+    }
+
+    if (window.innerWidth > 1100) {
+        $("#smallNavBlendInAtLogin").css("display", "none");
+    } else {
+        $("#smallNavBlendInAtLogin").css("display", "block");
+    }
 });
