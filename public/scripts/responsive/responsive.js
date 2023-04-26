@@ -1,5 +1,4 @@
 /*eslint-env jquery */  
-
 function toggleNavbar() {
     $(".smallnav").toggle();
 }
